@@ -20,17 +20,25 @@ import kr.ac.kopo.ctc.spring.board.domain.BoardItem;
 class BoardGroupRepositoryTest {
 	
 	@Autowired
+	BoardItemRepository boardItemRepository;
+	
+	@Autowired
 	private BoardGroupRepository boardGroupRepository;
 	
+//	@Test
+//	public void setBasicData() {
+//		BoardGroup first = new BoardGroup();
+//		first.setId(1);
+//		first.setName("아이유");
+//		first.setTitle("아이유갤러리");
+//		boardGroupRepository.save(first);
+//	}
 	@Test
-	public void setBasicData() {
-		BoardGroup first = new BoardGroup();
-		first.setId(1);
-		first.setName("아이유");
-		first.setTitle("아이유갤러리");
-		boardGroupRepository.save(first);
-	}
-	
+	void selectOne() {
+	Optional<BoardGroup> boardGroupOpt = boardGroupRepository.findById(1);
+	BoardGroup boardGroups = boardGroupOpt.get();
+	System.out.println(boardGroups);
+}
 //	@Test
 //	public void oneToMany_TwoWay() {
 //		BoardItem boardItem = new BoardItem();

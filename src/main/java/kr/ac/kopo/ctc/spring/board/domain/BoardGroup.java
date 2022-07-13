@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class BoardGroup {
 	@Column
 	private String title;
 
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="boardGroup")
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy="boardGroup")
 	private List<BoardItem> boardItems;
 	
 	public List<BoardItem> getBoardItems() {

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class BoardItem {
 	@Column
 	private int view;
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=false, fetch = FetchType.LAZY)
 	@JoinColumn(name="boardGroup_id")
 	private BoardGroup boardGroup;
 	

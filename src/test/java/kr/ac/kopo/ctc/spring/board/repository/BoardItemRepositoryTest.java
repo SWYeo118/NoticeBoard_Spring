@@ -33,11 +33,17 @@ class BoardItemRepositoryTest {
 		BoardItem boardItems = new BoardItem();
 		boardItems.setAuthor("아이유사랑해");
 		boardItems.setCreated(new Date()); // 1900년부터 시작, 6월달로 나옴
-		boardItems.setNo(2);
+		boardItems.setNo(3);
 		boardItems.setTitle("카리나예쁘지않음?");
-		boardItems.setView(2);
+		boardItems.setView(4);
 		boardItems.setBoardGroup(first);
 		boardItemRepository.save(boardItems);
+	}
+	@Test
+	void selectOne() {
+		Optional<BoardItem> boardItemOpt = boardItemRepository.findById(1);
+		BoardItem boardItems = boardItemOpt.get();
+		System.out.println(boardItems);
 	}
 //	
 //	@Test
@@ -58,11 +64,7 @@ class BoardItemRepositoryTest {
 //		boardItemRepository.deleteById(1);
 //	}
 //	
-//	@Test
-//	void selectOne() {
-//		Optional<BoardItem> boardItemOpt = boardItemRepository.findById(1);
-//		BoardItem boardItem = boardItemOpt.get();
-//	}
+
 //	
 //	@Test
 //	void selectAll() {
