@@ -33,12 +33,16 @@ class BoardGroupRepositoryTest {
 //		first.setTitle("아이유갤러리");
 //		boardGroupRepository.save(first);
 //	}
+//	@Test
+//	void selectOne() {
+//	Optional<BoardGroup> boardGroupOpt = boardGroupRepository.findById(1);
+//	BoardGroup boardGroups = boardGroupOpt.get();
+//	System.out.println(boardGroups);
+//}
 	@Test
-	void selectOne() {
-	Optional<BoardGroup> boardGroupOpt = boardGroupRepository.findById(1);
-	BoardGroup boardGroups = boardGroupOpt.get();
-	System.out.println(boardGroups);
-}
+	void deleteById() {
+		boardGroupRepository.deleteById(1);
+	}
 //	@Test
 //	public void oneToMany_TwoWay() {
 //		BoardItem boardItem = new BoardItem();
