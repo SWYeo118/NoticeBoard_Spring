@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0/EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ac.kopo.ctc.spring.board.repo.mapper.BoardItemMapper">
+	<select id="findAll" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		select
+			*
+		from
+			board_item
+	</select>
+	
+	<select id="findOne" parameterType="kr.ac.kopo.ctc.spring.board.repo.mapper.BoardItemCondition" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		select
+			*
+		from
+			board_item b
+		where
+			id = #{id}
+	</select>
+	
+	<select id="findByPaging" parameterType="kr.ac.kopo.ctc.spring.board.repo.mapper.BoardItemCondition" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		select
+			*
+		from
+			board_item b
+		where
+			1 = 1
+		<include refid="whereCondition"/>
+	</select>
+	
+	<select id="findBySearching" parameterType="kr.ac.kopo.ctc.spring.board.repo.mapper.BoardItemCondition" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		select
+			*
+		from
+			board_item b
+		where
+			author = #{author}
+	</select>
+	
+	<select id="findBySearchingAndPaging" parameterType="kr.ac.kopo.ctc.spring.board.repo.mapper.BoardItemCondition" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		select
+			*
+		from
+			board_item b
+		where
+			author = #{author}
+	</select>
+	
+	<select id="insertOne" parameterType="kr.ac.kopo.ctc.spring.board.repo.mapper.BoardItemCondition" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		INSERT
+			into
+		board_item
+			VALUES
+		(#{id}, #{author}, #{created}, #{no}, #{title}, #{view})
+	</select>
+	
+	<select id="updateOne" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		UPDATE
+			board_item
+		SET
+			id=111,
+		author="신세경",
+			created=now(),
+		no=25,
+			title="내여친",
+		view="11"
+			where
+		id=7
+	</select>
+	
+	<select id="deleteOne" resultType="kr.ac.kopo.ctc.spring.board.domain.BoardItem">
+		DELETE
+			from
+		board_item
+			where
+		id=7
+	</select>
+	
+	<sql id="whereCondition">
+		<if test="id != null">
+			and b.id = #{id}
+		</if>
+		<if test="author != null">
+			and b.author = #{author}
+		</if>
+	</sql>
+</mapper>
