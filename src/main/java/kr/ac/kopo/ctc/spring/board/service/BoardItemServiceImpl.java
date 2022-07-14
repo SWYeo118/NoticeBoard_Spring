@@ -1,38 +1,40 @@
 package kr.ac.kopo.ctc.spring.board.service;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
-import kr.ac.kopo.ctc.spring.board.domain.BoardItem;
-import kr.ac.kopo.ctc.spring.board.domain.BoardItemDao;
-import kr.ac.kopo.ctc.spring.board.domain.BoardItemDaoImpl;
-import kr.ac.kopo.ctc.spring.board.dto.Pagenation;
-
+@Service
 public class BoardItemServiceImpl implements BoardItemService{
+
+	@Override
+	public void test() {
+		System.out.println("BoardItemServiceImpl.test() 메소드 호출");
+	}
+
+	@Override
+	public void testAopBefore() {
+		System.out.println("BoardItemServiceImpl.testAopBefore() 메소드 호출");
+	}
+
+	@Override
+	public void testAopAfter() {
+		System.out.println("BoardItemServiceImpl.testAopAfter() 메소드 호출");
+	}
+
+	@Override
+	public String testAopAfterReturning() {
+		System.out.println("BoardItemServiceImpl.testAopAfterReturning() 메소드 호출");
+		return "Success";
+	}
+
+	@Override
+	public void testAopAfterThrowing() {
+		System.out.println("BoardItemServiceImpl.testAopAfterThrowing() 메소드 호출");
+		throw new RuntimeException("runtime exception 발생");
+	}
+
+	@Override
+	public void testAopAround() {
+		System.out.println("BoardItemServiceImpl.testAopAround() 메소드 호출");
+	}
 	
-	private BoardItemDao boardItemDao = new BoardItemDaoImpl();
-	
-	@Override
-	public Pagenation getPagenation(int countPerPage, int pageSize, int totalCount) {
-		
-		return null;
-	}
-
-	@Override
-	public BoardItem create(BoardItem boardItem) {
-		
-		return boardItemDao.create(boardItem);
-	}
-
-	@Override
-	public BoardItem selectOne(int id) {
-		// TODO Auto-generated method stub
-		return boardItemDao.selectOne(id);
-	}
-
-	@Override
-	public List<BoardItem> selectAll(int page, int countPerPage) {
-		// TODO Auto-generated method stub
-		return boardItemDao.selectAll(page, countPerPage);
-	}
-
 }
