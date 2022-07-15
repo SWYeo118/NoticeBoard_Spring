@@ -39,10 +39,10 @@ class BoardGroupRepositoryTest {
 //	BoardGroup boardGroups = boardGroupOpt.get();
 //	System.out.println(boardGroups);
 //}
-	@Test
-	void deleteById() {
-		boardGroupRepository.deleteById(1);
-	}
+//	@Test
+//	void deleteById() {
+//		boardGroupRepository.deleteById(1);
+//	}
 //	@Test
 //	public void oneToMany_TwoWay() {
 //		BoardItem boardItem = new BoardItem();

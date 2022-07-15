@@ -39,12 +39,12 @@ class BoardItemRepositoryTest {
 		boardItems.setBoardGroup(first);
 		boardItemRepository.save(boardItems);
 	}
-	@Test
-	void selectOne() {
-		Optional<BoardItem> boardItemOpt = boardItemRepository.findById(1);
-		BoardItem boardItems = boardItemOpt.get();
-		System.out.println(boardItems);
-	}
+//	@Test
+//	void selectOne() {
+//		Optional<BoardItem> boardItemOpt = boardItemRepository.findById(1);
+//		BoardItem boardItems = boardItemOpt.get();
+//		System.out.println(boardItems);
+//	}
 //	
 //	@Test
 //	void updateById() {
