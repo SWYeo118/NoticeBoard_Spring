@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class BoardItem {
 	
@@ -35,6 +37,7 @@ public class BoardItem {
 	private int view;
 	
 	// 기본값은 EAGER, 그래야지 boardItem의 id값을 다 가져 올 수 있으니까. 
+	@JsonBackReference
 	@ManyToOne(optional=false, fetch = FetchType.LAZY)
 	@JoinColumn(name="boardGroup_id")
 	private BoardGroup boardGroup;

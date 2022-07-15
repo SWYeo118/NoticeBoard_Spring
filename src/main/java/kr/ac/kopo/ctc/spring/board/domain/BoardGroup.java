@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class BoardGroup {
 
@@ -29,6 +31,7 @@ public class BoardGroup {
 	// 기본값은 LAZY, 그래야지 boardItem의 모든 값을 다 가져 올 필요는 없으니까. 
 	// 기본적으로는 모든 값을 다 가져왔다고 치고 진행이 된다.
 	// cascade 설정이 되어있으면 boardGroup이 지워지면, 연결되어있는 boardGroup이 모두 지워진다.
+	@JsonManagedReference
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER ,mappedBy="boardGroup")
 	private List<BoardItem> boardItems;
 	

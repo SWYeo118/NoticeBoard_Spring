@@ -12,6 +12,6 @@ import kr.ac.kopo.ctc.spring.board.domain.BoardItem;
 
 @Repository
 public interface BoardItemRepository extends JpaRepository<BoardItem, Integer>, JpaSpecificationExecutor<BoardItem>, PagingAndSortingRepository<BoardItem, Integer> {
-	List<BoardItem> findByTitleContaining(String title);
-	List<BoardItem> findByTitleContaining(String title, Pageable page);
+	List<BoardItem> findByBoardGroupId(Integer number);
+//	List<BoardItem> findByTitleContaining(String title, Pageable page);
 }

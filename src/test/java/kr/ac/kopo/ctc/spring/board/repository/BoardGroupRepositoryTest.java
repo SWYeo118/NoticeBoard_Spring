@@ -25,14 +25,14 @@ class BoardGroupRepositoryTest {
 	@Autowired
 	private BoardGroupRepository boardGroupRepository;
 	
-//	@Test
-//	public void setBasicData() {
-//		BoardGroup first = new BoardGroup();
-//		first.setId(1);
-//		first.setName("아이유");
-//		first.setTitle("아이유갤러리");
-//		boardGroupRepository.save(first);
-//	}
+	@Test
+	public void setBasicData() {
+		BoardGroup first = new BoardGroup();
+		first.setId(1);
+		first.setName("아이유");
+		first.setTitle("아이유갤러리");
+		boardGroupRepository.save(first);
+	}
 //	@Test
 //	void selectOne() {
 //	Optional<BoardGroup> boardGroupOpt = boardGroupRepository.findById(1);
