@@ -1,42 +1,6 @@
-<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
-<%@ page import="java.util.*,java.sql.*,javax.sql.*,java.io.*"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.dto.Notice"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.repository.NoticeDao"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.service.NoticeDaoImpl"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%
-ServletContext context = getServletContext();
-NoticeDao noticedao = new NoticeDaoImpl();
-List<Notice> noticeDatas = noticedao.selectAll();
-String key = request.getParameter("key");
-int keyNum = Integer.parseInt(key);
-
-Class.forName("com.mysql.cj.jdbc.Driver");
-Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
-Statement stmt = conn.createStatement();
-stmt.execute("UPDATE gongji SET viewingCount = viewingCount + 1 where id=" + keyNum + ";");
-
-String title = noticedao.getOne(keyNum).getTitle();
-Date date = noticedao.getOne(keyNum).getDate();
-String content = noticedao.getOne(keyNum).getContent();
-int viewingCount = noticedao.getOne(keyNum).getViewingCount();
-int originalPostId = noticedao.getOne(keyNum).getOriginalPostId();
-int replyLevel = noticedao.getOne(keyNum).getReplyLevel();
-int replyViewOrder = noticedao.getOne(keyNum).getReplyViewOrder();
-context.setAttribute("key", key);
-context.setAttribute("keyNum", keyNum);
-context.setAttribute("noticeDatas", noticeDatas);
-context.setAttribute("title", title);
-context.setAttribute("date", date);
-context.setAttribute("content", content);
-context.setAttribute("viewingCount", viewingCount);
-context.setAttribute("originalPostId", originalPostId);
-context.setAttribute("replyLevel", replyLevel);
-context.setAttribute("replyViewOrder", replyViewOrder);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,13 +49,13 @@ context.setAttribute("replyViewOrder", replyViewOrder);
 			<tr>
 				<td width=600></td>
 				<td><input type=button value="목록"
-					OnClick="location.href='e_02.jsp'"></td>
+					OnClick="location.href='/e_02'"></td>
 				<td><input type=button value="수정"
-					OnClick="location.href='e_02_update.jsp?key=${keyNum}'"></td>
+					OnClick="location.href='update?key=${keyNum}'"></td>
 				<td><input type=button value="삭제" 
-					OnClick="location.href='e_02_delete.jsp?key=${keyNum}'"></td>
+					OnClick="location.href='delete?key=${keyNum}'"></td>
 				<td><input type=button value="댓글"
-				 	OnClick="location.href='e_02_replyWrite.jsp?key=${keyNum}'"></td>
+				 	OnClick="location.href='replyWrite?key=${keyNum}'"></td>
 			</tr>
 		</table>
 	</FORM>

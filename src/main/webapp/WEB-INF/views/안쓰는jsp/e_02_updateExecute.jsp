@@ -1,5 +1,3 @@
-//<%@page import="kr.ac.kopo.ctc.spring.board.repository.NoticeDao"%>
-//<%@page import="kr.ac.kopo.ctc.spring.board.service.NoticeDaoImpl"%>
 //<%@page import="java.sql.Statement"%>
 //<%@page import="java.sql.Connection"%>
 //<%@page import="java.sql.DriverManager"%>
@@ -8,17 +6,18 @@
 //<%@ page language="java" contentType="text/html; charset=UTF-8"
 //    pageEncoding="UTF-8"%>
 //<%
+//request.setCharacterEncoding("utf-8");
 //ServletContext context = getServletContext();
 //Class.forName("com.mysql.cj.jdbc.Driver");
 //Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
 //Statement stmt = conn.createStatement();
-//NoticeDao noticedao = new NoticeDaoImpl();
-//
-//String id = request.getParameter("key");
-//int keyNum = Integer.parseInt(id);
-//
-//int originalPostId = noticedao.getOne(keyNum).getOriginalPostId();
-//stmt.execute("delete from gongji where originalPostId = " + originalPostId + ";");
+//String id = request.getParameter("id");
+//String titleTmp = request.getParameter("title");
+//String contentTmp = request.getParameter("content");
+//context.setAttribute("titleTmp", titleTmp);
+//context.setAttribute("contentTmp", contentTmp);
+//context.setAttribute("id", id);
+//stmt.execute("UPDATE gongji SET title='"+ titleTmp + "',content='" + contentTmp + "' where id = " + id + ";");
 //stmt.close();
 //conn.close();
 //%>
@@ -26,8 +25,11 @@
 //<!DOCTYPE html>
 //<html>
 //<head>
+//<SCRIPT LANGUAGE="JavaScript">
+//</SCRIPT>
 //<meta charset="UTF-8">
 //</head>
 //<body>
+//<jsp:forward page="e_02" />
 //</body>
 //</html>

@@ -1,35 +1,6 @@
-<%@page import="kr.ac.kopo.ctc.spring.board.dto.Pagination"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.repository.PaginationService"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.service.PaginationServiceImpl"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.dto.Notice"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.repository.NoticeDao"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.service.NoticeDaoImpl"%>
-<%@page import="java.util.List"%>
-<%@ page import="java.util.*,java.sql.*,javax.sql.*,java.io.*"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-ServletContext context = getServletContext();
-Notice notice = new Notice();
-Pagination pagination = new Pagination();
-NoticeDao noticedao = new NoticeDaoImpl();
-PaginationService paginationImpl = new PaginationServiceImpl();
-
-String cPage = request.getParameter("cPage");
- 
-if (cPage == null || "null".equals(cPage)) {
-    cPage = "1";
-  }
-int cPageInt = Integer.parseInt(cPage);
-List<Notice> noticeDatasPage = noticedao.selectAll(cPageInt, 10);
-int totalCount = noticedao.getTotalCount();
-Pagination paginationDatas = paginationImpl.getPagination(cPageInt, 10, 10, totalCount);
-
-pageContext.setAttribute("noticeDatasPage", noticeDatasPage);
-pageContext.setAttribute("paginationDatas", paginationDatas);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,9 +9,6 @@ a {
 	  text-decoration-line: none;
 }
 </style>
-
-<SCRIPT LANGUAGE="JavaScript">
-</SCRIPT>
 <meta charset="UTF-8">
 </head>
 <body>
@@ -59,7 +27,7 @@ a {
 						<c:out value="${noticeData.id}" />
 					</p></td>
 				<td width=500><p align=center>
-						<a href='e_02_oneview.jsp?key=${noticeData.id}'><c:out
+						<a href='/e_02/oneview?key=${noticeData.id}'><c:out
 								value="${noticeData.title}" /></a>
 					</p></td>
 				<td width=70><p align=center>
@@ -75,23 +43,23 @@ a {
 		<tr>
 			<td width=550></td>
 			<td><input type=button value="신규"
-				OnClick="window.location='e_02_pageWrite.jsp'"></td>
+				OnClick="window.location='e_02/pageWrite'"></td>
 		</tr>
 	</table>
 		<div class="text-center">
-		<c:url var="urlppPage" value="/e_02.jsp" >
+		<c:url var="urlppPage" value="/e_02" >
 			<c:param name="cPage" value="${paginationDatas.ppPage}"/>
 		</c:url>
 		
-		<c:url var="urlpPage" value="/e_02.jsp">
+		<c:url var="urlpPage" value="/e_02">
 			<c:param name="cPage" value="${paginationDatas.pPage}"/>
 		</c:url>
 		
-		<c:url var="urlnnPage" value="/e_02.jsp">
+		<c:url var="urlnnPage" value="/e_02">
 			<c:param name="cPage" value="${paginationDatas.nnPage}"/>
 		</c:url>
 		
-		<c:url var="urlnPage" value="/e_02.jsp">
+		<c:url var="urlnPage" value="/e_02">
 			<c:param name="cPage" value="${paginationDatas.nPage}"/>
 		</c:url>
 		
@@ -102,7 +70,7 @@ a {
 		</c:if>
 		
 		<c:forEach var="i" begin="${paginationDatas.startPage}" end="${paginationDatas.lastPage}">
-		  <b><a href = 'e_02.jsp?cPage=${i}'>${i}</a></b>
+		  <b><a href = 'e_02?cPage=${i}'>${i}</a></b>
 		</c:forEach>
 		      
 		<c:if test="${nnPage ne 0 && nPage ne 0}">

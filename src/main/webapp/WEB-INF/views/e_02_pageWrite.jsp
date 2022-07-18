@@ -1,20 +1,5 @@
-<%@page import="kr.ac.kopo.ctc.spring.board.repository.NoticeDao"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.service.NoticeDaoImpl"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.time.LocalDate"%>
-<%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-request.setCharacterEncoding("utf-8");
-LocalDate now = LocalDate.now();
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-String formatDate = now.format(formatter);
-ServletContext context = getServletContext();
-context.setAttribute("formatDate", formatDate);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,13 +8,11 @@ textarea {
 	  resize: none;
 }
 </style>
-<SCRIPT LANGUAGE="JavaScript">
-</SCRIPT>
 <meta charset="UTF-8">
 </head>
 <body>
 <center>
-<FORM METHOD=POST action='e_02_pageInsert.jsp'>
+<FORM METHOD=POST action='allview_pageWrite'>
 <table width=650 border=1 cellspacing=0 cellpadding=5 >
 <tr>
 	<td><b>번호</b></td>
@@ -52,7 +35,7 @@ textarea {
 <table width=650>
 <tr>
 	<td width=600></td>
-	<td><input type=button value="취소" OnClick="location.href='e_02.jsp'" style="margin: auto;"></td>
+	<td><input type=button value="취소" OnClick="location.href='/e_02'" style="margin: auto;"></td>
 	<td><input type=submit value="쓰기" style="margin: auto;"></td>
 </tr>
 </table>

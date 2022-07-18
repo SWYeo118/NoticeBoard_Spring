@@ -1,27 +1,5 @@
-<%@page import="java.util.Date"%>
-<%@page import="java.util.List"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.dto.Notice"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.repository.NoticeDao"%>
-<%@page import="kr.ac.kopo.ctc.spring.board.service.NoticeDaoImpl"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-ServletContext context = getServletContext();
-NoticeDao noticedao = new NoticeDaoImpl();
-List<Notice> noticeDatas = noticedao.selectAll();
-String key = request.getParameter("key");
-int keyNum = Integer.parseInt(key);
-String title = noticedao.getOne(keyNum).getTitle();
-Date date = noticedao.getOne(keyNum).getDate();
-String content = noticedao.getOne(keyNum).getContent();
-
-context.setAttribute("key", key);
-context.setAttribute("keyNum", keyNum);
-context.setAttribute("noticeDatas", noticeDatas);
-context.setAttribute("title", title);
-context.setAttribute("date", date);
-context.setAttribute("content", content);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,9 +11,9 @@ textarea {
 <SCRIPT LANGUAGE="JavaScript">
 function submitForm(mode) {
 	if (mode == "update"){
-		document.fm.action = "e_02_updateExecute.jsp";
+		document.fm.action = "allview_update";
 	} else if (mode == "delete"){ 
-		document.fm.action = "e_02_delete.jsp";
+		document.fm.action = "delete";
 	}
 	fm.submit();
 }
@@ -68,7 +46,7 @@ function submitForm(mode) {
 <table width=650>
 <tr>
 	<td width=600></td>
-	<td><input type=button value="취소" OnClick="location.href='e_02.jsp'"></td>
+	<td><input type=button value="취소" OnClick="location.href='/e_02'"></td>
 	<td><input type=button value="확인" OnClick="submitForm('update')"></td>
 	<td><input type=button value="삭제" OnClick="submitForm('delete')"></td>
 </tr>
