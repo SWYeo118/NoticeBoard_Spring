@@ -21,15 +21,6 @@ import kr.ac.kopo.ctc.spring.board.repository.BoardItemRepository;
 @RequestMapping(value = "/board")
 public class BoardItemController {
 	
-//		@Autowired
-//		private BoardItemRepository boardItemRepository;
-//		
-//		@RequestMapping(value = "/boardItem/list")
-//		@ResponseBody
-//		public List<BoardItem> list(Model model) {
-//			return boardItemRepository.findByTitleContaining("카리나");
-//		}
-
 		@RequestMapping(value = "")
 		public String hello(Model model) {
 			model.addAttribute("name", "여상우");
