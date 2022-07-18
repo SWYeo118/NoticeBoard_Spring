@@ -13,7 +13,7 @@ a {
 </head>
 <body>
 <center>
-<span style="font-size: 42px;"><b>이용후기 게시판입니다.</b></span><br><br><br>
+<span style="font-size: 42px;"><b>게시판입니다!</b></span><br><br><br>
 	<table cellspacing=1 cellpadding=1 width=600 border=1>
 		<tr>
 			<td width=70><p align=center>번호</p></td>

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.kopo.ctc.spring.board.dto.Notice;
 import kr.ac.kopo.ctc.spring.board.dto.Pagination;
-import kr.ac.kopo.ctc.spring.board.repository.NoticeDao;
+import kr.ac.kopo.ctc.spring.board.repository.NoticeRepository;
 import kr.ac.kopo.ctc.spring.board.repository.PaginationService;
-import kr.ac.kopo.ctc.spring.board.service.NoticeDaoImpl;
+import kr.ac.kopo.ctc.spring.board.service.NoticeService;
 import kr.ac.kopo.ctc.spring.board.service.PaginationServiceImpl;
 
 @Controller
@@ -28,7 +28,7 @@ public class NoticeController {
 
 	@RequestMapping(value = "")
 	public String e_02(Model model, HttpServletRequest req) throws ClassNotFoundException, SQLException {
-		NoticeDao noticedao = new NoticeDaoImpl();
+		NoticeRepository noticedao = new NoticeService();
 		PaginationService paginationImpl = new PaginationServiceImpl();
 
 		String cPage = req.getParameter("cPage");
@@ -49,7 +49,7 @@ public class NoticeController {
 	public String allview_pageWrite(Model model, HttpServletRequest req)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
 		req.setCharacterEncoding("utf-8");
-		NoticeDao noticedao = new NoticeDaoImpl();
+		NoticeRepository noticedao = new NoticeService();
 		PaginationService paginationImpl = new PaginationServiceImpl();
 		String cPage = req.getParameter("cPage");
 		if (cPage == null || "null".equals(cPage)) {
@@ -101,7 +101,7 @@ public class NoticeController {
 
 	@RequestMapping(value = "oneview")
 	public String e_02_oneview(Model model, HttpServletRequest req) throws ClassNotFoundException, SQLException {
-		NoticeDao noticedao = new NoticeDaoImpl();
+		NoticeRepository noticedao = new NoticeService();
 		List<Notice> noticeDatas = noticedao.selectAll();
 		String key = req.getParameter("key");
 		int keyNum = Integer.parseInt(key);
@@ -146,7 +146,7 @@ public class NoticeController {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
 		Statement stmt = conn.createStatement();
-		NoticeDao noticedao = new NoticeDaoImpl();
+		NoticeRepository noticedao = new NoticeService();
 		String id = req.getParameter("key");
 		int keyNum = Integer.parseInt(id);
 		int originalPostId = noticedao.getOne(keyNum).getOriginalPostId();
@@ -159,7 +159,7 @@ public class NoticeController {
 	@RequestMapping(value = "update")
 	public String e_02_update(Model model, HttpServletRequest req)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
-		NoticeDao noticedao = new NoticeDaoImpl();
+		NoticeRepository noticedao = new NoticeService();
 		List<Notice> noticeDatas = noticedao.selectAll();
 		String key = req.getParameter("key");
 		int keyNum = Integer.parseInt(key);
@@ -179,7 +179,7 @@ public class NoticeController {
 	public String e_02_replyWrite(Model model, HttpServletRequest req)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
 		req.setCharacterEncoding("utf-8");
-		NoticeDao noticedao = new NoticeDaoImpl();
+		NoticeRepository noticedao = new NoticeService();
 		String key = req.getParameter("key");
 		int keyNum = Integer.parseInt(key);
 		LocalDate now = LocalDate.now();

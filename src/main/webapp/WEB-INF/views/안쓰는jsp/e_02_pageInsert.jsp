@@ -1,5 +1,5 @@
-//<%@page import="kr.ac.kopo.ctc.spring.board.repository.NoticeDao"%>
-//<%@page import="kr.ac.kopo.ctc.spring.board.service.NoticeDaoImpl"%>
+//<%@page import="kr.ac.kopo.ctc.spring.board.repository.NoticeRepository"%>
+//<%@page import="kr.ac.kopo.ctc.spring.board.service.NoticeService"%>
 //<%@page import="java.sql.Statement"%>
 //<%@page import="java.sql.Connection"%>
 //<%@page import="java.sql.DriverManager"%>

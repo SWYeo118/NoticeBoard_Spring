@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<SCRIPT LANGUAGE="JavaScript">
-</SCRIPT>
 <meta charset="UTF-8">
 </head>
 <body>

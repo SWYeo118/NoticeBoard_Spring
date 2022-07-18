@@ -13,12 +13,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import kr.ac.kopo.ctc.spring.board.dto.*;
-import kr.ac.kopo.ctc.spring.board.repository.NoticeDao;
+import kr.ac.kopo.ctc.spring.board.repository.NoticeRepository;
 
 @Service
-public class NoticeDaoImpl implements NoticeDao {
+public class NoticeService implements NoticeRepository {
 
-	public NoticeDaoImpl() {
+	public NoticeService() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver"); // jdbc Driver에 연결
 		} catch (ClassNotFoundException e) {

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 import kr.ac.kopo.ctc.spring.board.dto.*;
 
 @Repository
-public interface NoticeDao {
-
+public interface NoticeRepository {
 	void makingTable();
 	void dropTable();
 	int getTotalCount();
@@ -18,6 +17,4 @@ public interface NoticeDao {
 	List<Notice> selectAll();
 	int getMax();
 	int getReplyViewOrders(int originalPostId);
-	
-
 }
