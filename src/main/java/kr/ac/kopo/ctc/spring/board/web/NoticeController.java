@@ -35,15 +35,48 @@ public class NoticeController {
 
 	@RequestMapping(value = "")
 	public String e_02(Model model, HttpServletRequest req) throws ClassNotFoundException, SQLException {
-		Integer cPageInt = 0;
-		if (cPageInt != 0) {
-			PageRequest pageRequest = PageRequest.of(cPageInt, 10, Sort.by(Sort.Direction.DESC, "id"));
+		// 키값 cPage 받아서 없으면 1
+		String key = req.getParameter("cPage");
+		if (key == null) {
+			key = "0";
 		}
-		PageRequest pageRequest = PageRequest.of(cPageInt, 10, Sort.by(Sort.Direction.DESC, "id"));
+		
+		// 값이 있으면 keyNum
+		Integer keyNum = Integer.parseInt(key);
+		
+		// 페이지 소팅
+		PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id"));
+		if (keyNum >= 0) {
+			pageRequest = PageRequest.of(keyNum, 10, Sort.by(Sort.Direction.DESC, "id"));
+		}
+		
+		// 총페이지 2
 		int totalPage = noticeService.selectAll(pageRequest).getTotalPages();
+		
+		// 페이지사이즈 10
+		int pageSize = noticeService.selectAll(pageRequest).getSize();
+		
+		int ppPage = 0;
+		int nnPage = totalPage - 1;
+		int nPage = 0;
+		int pPage = 0;
+		if (totalPage < nPage + pageSize) {
+			nPage = totalPage - 1;
+		} else {
+			nPage = keyNum + totalPage;
+		}
+		
+		if (pPage + pageSize > totalPage) {
+			pPage = keyNum - pageSize;
+		}
+		
 		model.addAttribute("noticeDataAll", noticeService.selectAll(pageRequest).getContent());
-		model.addAttribute("cPageInt", cPageInt + 1);
+		model.addAttribute("cPageInt", 1);
 		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("pPage", pPage);
+		model.addAttribute("ppPage", ppPage);
+		model.addAttribute("nPage", nPage);
+		model.addAttribute("nnPage", nnPage);
 		return "e_02";
 	}
 	

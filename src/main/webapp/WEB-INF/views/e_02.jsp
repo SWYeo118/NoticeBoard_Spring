@@ -48,30 +48,25 @@ a {
 	</table>
 		<div class="text-center">
 		<c:url var="urlppPage" value="/e_02" >
-			<c:param name="cPage" value="${paginationDatas.ppPage}"/>
+			<c:param name="cPage" value="${ppPage}"/>
 		</c:url>
 		
 		<c:url var="urlpPage" value="/e_02">
-			<c:param name="cPage" value="${paginationDatas.pPage}"/>
+			<c:param name="cPage" value="${pPage}"/>
 		</c:url>
 		
 		<c:url var="urlnnPage" value="/e_02">
-			<c:param name="cPage" value="${paginationDatas.nnPage}"/>
+			<c:param name="cPage" value="${nnPage}"/>
 		</c:url>
 		
 		<c:url var="urlnPage" value="/e_02">
-			<c:param name="cPage" value="${paginationDatas.nPage}"/>
+			<c:param name="cPage" value="${nPage}"/>
 		</c:url>
-		
-		<c:if test="${ppPage ne 0 && pPage ne 0}">
 		  <a href=<c:out value="${urlppPage}"/>><c:out value="<<"/></a>
 		  <a href=<c:out value="${urlppPage}"/>><c:out value="<"/></a>
-		</c:if>
-		
 		<c:forEach var="i" begin="${cPageInt}" end="${totalPage}">
 		  <b><a href = 'e_02?cPage=${i-1}'>${i}</a></b>
 		</c:forEach>
-		      
 		<c:if test="${nnPage ne 0 && nPage ne 0}">
 			<a href=<c:out value="${urlnPage}"/>><c:out value=">"/></a>
 			<a href=<c:out value="${urlnnPage}"/>><c:out value=">>"/></a>
