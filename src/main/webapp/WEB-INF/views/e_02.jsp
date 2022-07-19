@@ -21,7 +21,7 @@ a {
 			<td width=70><p align=center>조회수</p></td>
 			<td width=100><p align=center>등록일</p></td>
 		</tr>
-		<c:forEach var="noticeData" items="${noticeDatasPage}">
+		<c:forEach var="noticeData" items="${noticeDataAll}">
 			<tr>
 				<td width=70><p align=center>
 						<c:out value="${noticeData.id}" />

@@ -9,15 +9,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import kr.ac.kopo.ctc.spring.board.domain.Notice;
+import kr.ac.kopo.ctc.spring.board.domain.NoticeReply;
+import kr.ac.kopo.ctc.spring.board.repository.NoticeReplyRepository;
 import kr.ac.kopo.ctc.spring.board.repository.NoticeRepository;
 
 @Service
-public class NoticeService implements NoticeRepository {
-
+public class NoticeService {
+	
+	@Autowired
+	NoticeRepository noticeRepository;
+	
+	@Autowired
+	NoticeReplyRepository noticeReplyRepository;
+	
+	
 	public NoticeService() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver"); // jdbc Driver에 연결
@@ -25,27 +39,9 @@ public class NoticeService implements NoticeRepository {
 			throw new IllegalStateException("jdbc 드라이버 로드 실패" + e); // 연결 실패 시 에러메세지
 		}
 	}
-	@Override
-	public void makingTable() {
-		
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root",
-				"CJDghd9311@");) {
-			String sql = "create table gongji(id int not null primary key auto_increment, title varchar(70), date date, content text)DEFAULT CHARSET=utf8";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.executeUpdate();
-			   sql="insert into gongji(title, date, content) values('공지사항1',date(now()),'공지사항내용1')"; stmt.execute(sql);
-			   sql="insert into gongji(title, date, content) values('공지사항2',date(now()),'공지사항내용2')"; stmt.execute(sql);
-			   sql="insert into gongji(title, date, content) values('공지사항3',date(now()),'공지사항내용3')"; stmt.execute(sql);
-			   sql="insert into gongji(title, date, content) values('공지사항4',date(now()),'공지사항내용4')"; stmt.execute(sql);
-			   sql="insert into gongji(title, date, content) values('공지사항5',date(now()),'공지사항내용5')"; stmt.execute(sql);
-		} catch (SQLException e) {
-			throw new IllegalStateException("making 실패 " + e.getMessage());
-		}
-	}
 	
-	@Override
 	public void dropTable() {
-		String sql = "drop table gongji";
+		String sql = "drop table notice";
 		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root",
 				"CJDghd9311@"); PreparedStatement stmt = conn.prepareStatement(sql);) {
 			stmt.executeUpdate();
@@ -54,159 +50,182 @@ public class NoticeService implements NoticeRepository {
 		}
 	}
 	
-	@Override
-	public List<Notice> selectAll(){
-		List<Notice> results = new ArrayList<>();
-
-		String sql = "SELECT * FROM gongji ORDER BY id DESC";
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root", "CJDghd9311@");
-				Statement stmt = conn.createStatement();) {
-			try (ResultSet rs = stmt.executeQuery(sql)) {
-				while (rs.next()) {
-					int id = rs.getInt(1);
-					String title = rs.getString(2);
-					Date date = rs.getDate(3);
-					String content = rs.getString(4);
-					int originalPostId = rs.getInt(5);
-//					int replyLevel = rs.getInt(6);
-//					int replyViewOrder = rs.getInt(7);
-					int viewingCount = rs.getInt(8);
-
-					Notice notice = new Notice();
-					notice.setId(id);
-					notice.setTitle(title);
-					notice.setDate(date);
-					notice.setContent(content);
-					notice.setOriginalPostId(originalPostId);
-//					notice.setReplyLevel(replyLevel);
-//					notice.setReplyViewOrder(replyViewOrder);
-					notice.setViewingCount(viewingCount);
-					results.add(notice);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return results;
+	public List<Notice> selectAll() {
+		List<Notice> selectAllNotice = noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+		return selectAllNotice;
 	}
 	
-	@Override
-	public List<Notice> selectAll(int page, int countPerPage) throws SQLException, ClassNotFoundException {
-		List<Notice> results = new ArrayList<>();
-
-		String sql = "SELECT * FROM gongji ORDER BY originalPostId DESC, replyViewOrder ASC limit " + (countPerPage * (page - 1)) + ", " + countPerPage + ";";
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root", "CJDghd9311@");
-				Statement stmt = conn.createStatement();) {
-			try (ResultSet rs = stmt.executeQuery(sql)) {
-				while (rs.next()) {
-					int id = rs.getInt(1);
-					String title = rs.getString(2);
-					Date date = rs.getDate(3);
-					String content = rs.getString(4);
-					int originalPostId = rs.getInt(5);
-//					int replyLevel = rs.getInt(6);
-//					int replyViewOrder = rs.getInt(7);
-					int viewingCount = rs.getInt(8);
-
-					Notice notice = new Notice();
-					notice.setId(id);
-					notice.setTitle(title);
-					notice.setDate(date);
-					notice.setContent(content);
-					notice.setOriginalPostId(originalPostId);
-//					notice.setReplyLevel(replyLevel);
-//					notice.setReplyViewOrder(replyViewOrder);
-					notice.setViewingCount(viewingCount);
-					results.add(notice);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return results;
+	public Optional<Notice> selectOne(Integer id) {
+		Optional<Notice> selectOneNotice = noticeRepository.findById(id);
+		return selectOneNotice;
 	}
 	
-	@Override
-	public int getTotalCount() {
-		int num = 0;
-		String sql = "SELECT count(*) FROM gongji"; // sql문
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
-				"CJDghd9311@"); Statement stmt = conn.createStatement();) {
-			ResultSet rs = stmt.executeQuery(sql); // ResultSet에 가져온 데이터 저장.
-			rs.next();
-			num = rs.getInt(1);
-		} catch (SQLException e) {
-			throw new IllegalStateException("db연결 실패" + e.getMessage());
-		}
-		return num;
+	public List<NoticeReply> selectReply(Integer id) {
+		List<NoticeReply> selectNoticeReply = noticeReplyRepository.findByNoticeId(id);
+		return selectNoticeReply;
 	}
 	
-	@Override
-	public Notice getOne(int id) {
+	public void create(String Title, String Content) {
 		Notice notice = new Notice();
-		String sql = "SELECT * FROM gongji where id=?";
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
-				"CJDghd9311@"); PreparedStatement stmt = conn.prepareStatement(sql);) {
-			stmt.setInt(1, id);
-			try (ResultSet rs = stmt.executeQuery();) {
-				rs.next();
-				String title = rs.getString(2);
-				Date date = rs.getDate(3);
-				String content = rs.getString(4);
-				int originalPostId = rs.getInt(5);
-//				int replyLevel = rs.getInt(6);
-//				int replyViewOrder = rs.getInt(7);
-				int viewingCount = rs.getInt(8);
-
-				notice.setTitle(title);
-				notice.setDate(date);
-				notice.setContent(content);
-				notice.setOriginalPostId(originalPostId);
-//				notice.setReplyLevel(replyLevel);
-//				notice.setReplyViewOrder(replyViewOrder);
-				notice.setViewingCount(viewingCount);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return notice;
+		notice.setTitle(Title);
+		notice.setDate(new Date()); // 1900년부터 시작, 6월달로 나옴
+		notice.setContent(Content);
+		notice.setViewingCount(0);
+		noticeRepository.save(notice);
 	}
-	@Override
-	public int getMax() {
-		int num = 0;
-		String sql = "SELECT MAX(id) FROM gongji"; // sql문
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
-				"CJDghd9311@"); Statement stmt = conn.createStatement();) {
-			ResultSet rs = stmt.executeQuery(sql); // ResultSet에 가져온 데이터 저장.
-			rs.next();
-			num = rs.getInt(1);
-		} catch (SQLException e) {
-			throw new IllegalStateException("db연결 실패" + e.getMessage());
-		}
-		return num;
+	
+	public void delete(int id) {
+		noticeRepository.deleteById(id);
 	}
-	@Override
-	public int getReplyViewOrders(int originalPostId) {
-		Notice notice = new Notice();
-		int num1 = 0;
-		String sql = "SELECT MAX(replyViewOrder) FROM gongji where originalPostId=?";
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
-				"CJDghd9311@"); PreparedStatement stmt = conn.prepareStatement(sql);) {
-			stmt.setInt(1, originalPostId);
-			try (ResultSet rs = stmt.executeQuery();) {
-				rs.next();
-				num1 = rs.getInt(1);
-				notice.setOriginalPostId(num1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return num1;
+	
+	public void updateById(int id, String title, String content) {
+		Optional<Notice> notice = noticeRepository.findById(id);
+		notice.ifPresent(noticeUpdate->{
+			noticeUpdate.setTitle(title);
+			noticeUpdate.setDate(new Date());
+			noticeUpdate.setContent(content);
+			noticeRepository.save(noticeUpdate);
+		});
 	}
 }
 
-
-
+	
+	
+//	public List<Notice> selectAll(){
+//		List<Notice> results = new ArrayList<>();
+//
+//		String sql = "SELECT * FROM gongji ORDER BY id DESC";
+//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root", "CJDghd9311@");
+//				Statement stmt = conn.createStatement();) {
+//			try (ResultSet rs = stmt.executeQuery(sql)) {
+//				while (rs.next()) {
+//					int id = rs.getInt(1);
+//					String title = rs.getString(2);
+//					Date date = rs.getDate(3);
+//					String content = rs.getString(4);
+//					int originalPostId = rs.getInt(5);
+////					int replyLevel = rs.getInt(6);
+////					int replyViewOrder = rs.getInt(7);
+//					int viewingCount = rs.getInt(8);
+//
+//					Notice notice = new Notice();
+//					notice.setId(id);
+//					notice.setTitle(title);
+//					notice.setDate(date);
+//					notice.setContent(content);
+////					notice.setReplyLevel(replyLevel);
+////					notice.setReplyViewOrder(replyViewOrder);
+//					notice.setViewingCount(viewingCount);
+//					results.add(notice);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return results;
+//	}
+//	public List<Notice> selectAll(int page, int countPerPage) throws SQLException, ClassNotFoundException {
+//		List<Notice> results = new ArrayList<>();
+//
+//		String sql = "SELECT * FROM gongji ORDER BY originalPostId DESC, replyViewOrder ASC limit " + (countPerPage * (page - 1)) + ", " + countPerPage + ";";
+//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root", "CJDghd9311@");
+//				Statement stmt = conn.createStatement();) {
+//			try (ResultSet rs = stmt.executeQuery(sql)) {
+//				while (rs.next()) {
+//					int id = rs.getInt(1);
+//					String title = rs.getString(2);
+//					Date date = rs.getDate(3);
+//					String content = rs.getString(4);
+//					int originalPostId = rs.getInt(5);
+////					int replyLevel = rs.getInt(6);
+////					int replyViewOrder = rs.getInt(7);
+//					int viewingCount = rs.getInt(8);
+//
+//					Notice notice = new Notice();
+//					notice.setId(id);
+//					notice.setTitle(title);
+//					notice.setDate(date);
+//					notice.setContent(content);
+////					notice.setReplyLevel(replyLevel);
+////					notice.setReplyViewOrder(replyViewOrder);
+//					notice.setViewingCount(viewingCount);
+//					results.add(notice);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return results;
+//	}
+//	
+//	public int getTotalCount() {
+//		int num = 0;
+//		String sql = "SELECT count(*) FROM gongji"; // sql문
+//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
+//				"CJDghd9311@"); Statement stmt = conn.createStatement();) {
+//			ResultSet rs = stmt.executeQuery(sql); // ResultSet에 가져온 데이터 저장.
+//			rs.next();
+//			num = rs.getInt(1);
+//		} catch (SQLException e) {
+//			throw new IllegalStateException("db연결 실패" + e.getMessage());
+//		}
+//		return num;
+//	}
+//	
+//	public Notice getOne(int id) {
+//		Notice notice = new Notice();
+//		String sql = "SELECT * FROM gongji where id=?";
+//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
+//				"CJDghd9311@"); PreparedStatement stmt = conn.prepareStatement(sql);) {
+//			stmt.setInt(1, id);
+//			try (ResultSet rs = stmt.executeQuery();) {
+//				rs.next();
+//				String title = rs.getString(2);
+//				Date date = rs.getDate(3);
+//				String content = rs.getString(4);
+//				int originalPostId = rs.getInt(5);
+//				int viewingCount = rs.getInt(8);
+//
+//				notice.setTitle(title);
+//				notice.setDate(date);
+//				notice.setContent(content);
+//				notice.setViewingCount(viewingCount);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return notice;
+//	}
+//	public int getMax() {
+//		int num = 0;
+//		String sql = "SELECT MAX(id) FROM gongji"; // sql문
+//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
+//				"CJDghd9311@"); Statement stmt = conn.createStatement();) {
+//			ResultSet rs = stmt.executeQuery(sql); // ResultSet에 가져온 데이터 저장.
+//			rs.next();
+//			num = rs.getInt(1);
+//		} catch (SQLException e) {
+//			throw new IllegalStateException("db연결 실패" + e.getMessage());
+//		}
+//		return num;
+//	}
+//	public int getReplyViewOrders(int originalPostId) {
+//		Notice notice = new Notice();
+//		int num1 = 0;
+//		String sql = "SELECT MAX(replyViewOrder) FROM gongji where originalPostId=?";
+//		try (Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/kopoctc", "root",
+//				"CJDghd9311@"); PreparedStatement stmt = conn.prepareStatement(sql);) {
+//			stmt.setInt(1, originalPostId);
+//			try (ResultSet rs = stmt.executeQuery();) {
+//				rs.next();
+//				num1 = rs.getInt(1);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return num1;
+//	}
+//}
 
 //@Override
 //public void update(int id, String title, String content) {
@@ -243,12 +262,6 @@ public class NoticeService implements NoticeRepository {
 //	}
 //	return scoreItem;
 //}
-//
-
-//
-//
-
-//
 //@Override
 //public void insert(ScoreItem scoreItems) {
 //	// PreparedStatement를 쓰면 여러번 지우고 쓸 때 빠르다.
@@ -268,5 +281,21 @@ public class NoticeService implements NoticeRepository {
 //	}
 //}
 //
+//@Override
+//public void makingTable() {
+//	
+//	try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root",
+//			"CJDghd9311@");) {
+//		String sql = "create table gongji(id int not null primary key auto_increment, title varchar(70), date date, content text)DEFAULT CHARSET=utf8";
+//		PreparedStatement stmt = conn.prepareStatement(sql);
+//		stmt.executeUpdate();
+//		   sql="insert into gongji(title, date, content) values('공지사항1',date(now()),'공지사항내용1')"; stmt.execute(sql);
+//		   sql="insert into gongji(title, date, content) values('공지사항2',date(now()),'공지사항내용2')"; stmt.execute(sql);
+//		   sql="insert into gongji(title, date, content) values('공지사항3',date(now()),'공지사항내용3')"; stmt.execute(sql);
+//		   sql="insert into gongji(title, date, content) values('공지사항4',date(now()),'공지사항내용4')"; stmt.execute(sql);
+//		   sql="insert into gongji(title, date, content) values('공지사항5',date(now()),'공지사항내용5')"; stmt.execute(sql);
+//	} catch (SQLException e) {
+//		throw new IllegalStateException("making 실패 " + e.getMessage());
+//	}
+//}
 
-//

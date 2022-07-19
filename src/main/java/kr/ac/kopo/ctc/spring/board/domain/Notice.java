@@ -33,9 +33,6 @@ public class Notice {
 	private String content;
 	
 	@Column
-	private Integer originalPostId;
-	
-	@Column
 	private Integer viewingCount;
 	
 	// 기본값은 LAZY, 그래야지 boardItem의 모든 값을 다 가져 올 필요는 없으니까. 
@@ -94,20 +91,11 @@ public class Notice {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getOriginalPostId() {
-		return originalPostId;
-	}
-	public void setOriginalPostId(int originalPostId) {
-		this.originalPostId = originalPostId;
-	}
 	public int getViewingCount() {
 		return viewingCount;
 	}
 	public void setViewingCount(int viewingCount) {
 		this.viewingCount = viewingCount;
-	}
-	public void setOriginalPostId(Integer originalPostId) {
-		this.originalPostId = originalPostId;
 	}
 	public void setViewingCount(Integer viewingCount) {
 		this.viewingCount = viewingCount;

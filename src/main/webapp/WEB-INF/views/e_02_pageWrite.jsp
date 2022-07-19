@@ -17,7 +17,6 @@ textarea {
 <tr>
 	<td><b>번호</b></td>
 	<td>신규(insert)<input type=hidden name=id value='INSERT'></td>
-	<input type=hidden name=maxId value='${maxId}'>
 </tr>
 <tr>
 	<td><b>제목</b></td>

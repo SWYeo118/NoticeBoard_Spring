@@ -1,21 +1,18 @@
 package kr.ac.kopo.ctc.spring.board.repository;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import kr.ac.kopo.ctc.spring.board.domain.Notice;
 import kr.ac.kopo.ctc.spring.board.domain.NoticeReply;
 
 @Repository
-public interface NoticeRepository extends JpaRepository<Notice, Integer>, JpaSpecificationExecutor<Notice>, PagingAndSortingRepository<Notice, Integer>  {
+public interface NoticeReplyRepository extends JpaRepository<NoticeReply, Integer>, JpaSpecificationExecutor<NoticeReply>, PagingAndSortingRepository<NoticeReply, Integer>  {
 
-	List<Notice> findAll(Sort sort);
-
+	List<NoticeReply> findByNoticeId(Integer id);
+	
 }

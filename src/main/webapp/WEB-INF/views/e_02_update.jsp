@@ -26,19 +26,19 @@ function submitForm(mode) {
 <table width=650 border=1 cellspacing=0 cellpadding=5>
 <tr>
 	<td><b>번호</b></td>
-	<td><input type=text name=id size=70 maxlength=70 value='${keyNum}' readonly></td>
+	<td><input type=text name=id size=70 maxlength=70 value='${noticeSelectOne.id}' readonly></td>
 </tr>
 <tr>
 	<td><b>제목</b></td>
-	<td><input type=text name=title size=70 maxlength=70 value='${title}'></td>
+	<td><input type=text name=title size=70 maxlength=70 value='${noticeSelectOne.title}'></td>
 </tr>
 <tr>
 	<td><b>일자</b></td>
-	<td>${date}</td>
+	<td>${formatDate}</td>
 </tr>
 <tr>
 	<td><b>내용</b></td>
-	<td><textarea style='width:500px; height:250px;' name=content >${content}</textarea></td>
+	<td><textarea style='width:500px; height:250px;' name=content >${noticeSelectOne.content}</textarea></td>
 </tr>
 </table>
 </center>

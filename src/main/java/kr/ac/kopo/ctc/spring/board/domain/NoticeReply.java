@@ -30,9 +30,6 @@ public class NoticeReply {
 	@Column
 	private Date date;
 	
-	@Column
-	private Integer pid;
-	
 	// 기본값은 EAGER, 그래야지 boardGroup의 id값을 다 가져 올 수 있으니까. 
 	@JsonBackReference
 	@ManyToOne(optional=false, fetch = FetchType.EAGER)
@@ -80,14 +77,6 @@ public class NoticeReply {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public Integer getPid() {
-		return pid;
-	}
-
-	public void setPid(Integer pid) {
-		this.pid = pid;
 	}
 
 }
