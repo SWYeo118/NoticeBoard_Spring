@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import kr.ac.kopo.ctc.spring.board.dto.*;
+import kr.ac.kopo.ctc.spring.board.domain.Notice;
 import kr.ac.kopo.ctc.spring.board.repository.NoticeRepository;
 
 @Service
@@ -68,8 +68,8 @@ public class NoticeService implements NoticeRepository {
 					Date date = rs.getDate(3);
 					String content = rs.getString(4);
 					int originalPostId = rs.getInt(5);
-					int replyLevel = rs.getInt(6);
-					int replyViewOrder = rs.getInt(7);
+//					int replyLevel = rs.getInt(6);
+//					int replyViewOrder = rs.getInt(7);
 					int viewingCount = rs.getInt(8);
 
 					Notice notice = new Notice();
@@ -78,8 +78,8 @@ public class NoticeService implements NoticeRepository {
 					notice.setDate(date);
 					notice.setContent(content);
 					notice.setOriginalPostId(originalPostId);
-					notice.setReplyLevel(replyLevel);
-					notice.setReplyViewOrder(replyViewOrder);
+//					notice.setReplyLevel(replyLevel);
+//					notice.setReplyViewOrder(replyViewOrder);
 					notice.setViewingCount(viewingCount);
 					results.add(notice);
 				}
@@ -104,8 +104,8 @@ public class NoticeService implements NoticeRepository {
 					Date date = rs.getDate(3);
 					String content = rs.getString(4);
 					int originalPostId = rs.getInt(5);
-					int replyLevel = rs.getInt(6);
-					int replyViewOrder = rs.getInt(7);
+//					int replyLevel = rs.getInt(6);
+//					int replyViewOrder = rs.getInt(7);
 					int viewingCount = rs.getInt(8);
 
 					Notice notice = new Notice();
@@ -114,8 +114,8 @@ public class NoticeService implements NoticeRepository {
 					notice.setDate(date);
 					notice.setContent(content);
 					notice.setOriginalPostId(originalPostId);
-					notice.setReplyLevel(replyLevel);
-					notice.setReplyViewOrder(replyViewOrder);
+//					notice.setReplyLevel(replyLevel);
+//					notice.setReplyViewOrder(replyViewOrder);
 					notice.setViewingCount(viewingCount);
 					results.add(notice);
 				}
@@ -154,16 +154,16 @@ public class NoticeService implements NoticeRepository {
 				Date date = rs.getDate(3);
 				String content = rs.getString(4);
 				int originalPostId = rs.getInt(5);
-				int replyLevel = rs.getInt(6);
-				int replyViewOrder = rs.getInt(7);
+//				int replyLevel = rs.getInt(6);
+//				int replyViewOrder = rs.getInt(7);
 				int viewingCount = rs.getInt(8);
 
 				notice.setTitle(title);
 				notice.setDate(date);
 				notice.setContent(content);
 				notice.setOriginalPostId(originalPostId);
-				notice.setReplyLevel(replyLevel);
-				notice.setReplyViewOrder(replyViewOrder);
+//				notice.setReplyLevel(replyLevel);
+//				notice.setReplyViewOrder(replyViewOrder);
 				notice.setViewingCount(viewingCount);
 			}
 		} catch (SQLException e) {

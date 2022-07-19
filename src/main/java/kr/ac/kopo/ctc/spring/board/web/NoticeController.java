@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.ac.kopo.ctc.spring.board.dto.Notice;
+import kr.ac.kopo.ctc.spring.board.domain.Notice;
 import kr.ac.kopo.ctc.spring.board.dto.Pagination;
 import kr.ac.kopo.ctc.spring.board.repository.NoticeRepository;
 import kr.ac.kopo.ctc.spring.board.repository.PaginationService;
@@ -114,8 +114,8 @@ public class NoticeController {
 		String content = noticedao.getOne(keyNum).getContent();
 		int viewingCount = noticedao.getOne(keyNum).getViewingCount();
 		int originalPostId = noticedao.getOne(keyNum).getOriginalPostId();
-		int replyLevel = noticedao.getOne(keyNum).getReplyLevel();
-		int replyViewOrder = noticedao.getOne(keyNum).getReplyViewOrder();
+//		int replyLevel = noticedao.getOne(keyNum).getReplyLevel();
+//		int replyViewOrder = noticedao.getOne(keyNum).getReplyViewOrder();
 		model.addAttribute("key", key);
 		model.addAttribute("keyNum", keyNum);
 		model.addAttribute("noticeDatas", noticeDatas);
@@ -124,8 +124,8 @@ public class NoticeController {
 		model.addAttribute("content", content);
 		model.addAttribute("viewingCount", viewingCount);
 		model.addAttribute("originalPostId", originalPostId);
-		model.addAttribute("replyLevel", replyLevel);
-		model.addAttribute("replyViewOrder", replyViewOrder);
+//		model.addAttribute("replyLevel", replyLevel);
+//		model.addAttribute("replyViewOrder", replyViewOrder);
 		return "e_02_oneview";
 	}
 
@@ -187,21 +187,21 @@ public class NoticeController {
 		String formatDate = now.format(formatter);
 
 		// 대댓글 확인번호
-		int replyLevel = noticedao.getOne(keyNum).getReplyLevel();
-		int replyLeveltoWrite = replyLevel + 1;
+//		int replyLevel = noticedao.getOne(keyNum).getReplyLevel();
+//		int replyLeveltoWrite = replyLevel + 1;
 
 		// 원글번호
 		int originalPostIdtoWrite = noticedao.getOne(keyNum).getOriginalPostId();
 
 		// 댓글 배치번호
-		int replyViewOrder = noticedao.getReplyViewOrders(originalPostIdtoWrite);
-		int replyViewOrdertoWrite = replyViewOrder + 1;
+//		int replyViewOrder = noticedao.getReplyViewOrders(originalPostIdtoWrite);
+//		int replyViewOrdertoWrite = replyViewOrder + 1;
 
 		model.addAttribute("formatDate", formatDate);
 		model.addAttribute("key", key);
 		model.addAttribute("keyNum", keyNum);
-		model.addAttribute("replyLeveltoWrite", replyLeveltoWrite);
-		model.addAttribute("replyViewOrdertoWrite", replyViewOrdertoWrite);
+//		model.addAttribute("replyLeveltoWrite", replyLeveltoWrite);
+//		model.addAttribute("replyViewOrdertoWrite", replyViewOrdertoWrite);
 		model.addAttribute("originalPostIdtoWrite", originalPostIdtoWrite);
 		return "e_02_replyWrite";
 	}

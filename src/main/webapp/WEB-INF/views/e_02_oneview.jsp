@@ -34,14 +34,6 @@
 				<td><b>원글번호</b></td>
 				<td><c:out value="${originalPostId}" /></td>
 			</tr>
-			<tr>
-				<td><b>대댓글 확인번호</b></td>
-				<td><c:out value="${replyLevel}" /></td>
-			</tr>
-			<tr>
-				<td><b>댓글 배치번호</b></td>
-				<td><c:out value="${replyViewOrder}" /></td>
-			</tr>
 		</table>
 		<table width=650 style="margin: auto;">
 			<tr>

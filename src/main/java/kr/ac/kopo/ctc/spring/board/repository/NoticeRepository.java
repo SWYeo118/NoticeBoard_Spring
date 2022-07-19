@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import kr.ac.kopo.ctc.spring.board.dto.*;
+import kr.ac.kopo.ctc.spring.board.domain.Notice;
 
 @Repository
 public interface NoticeRepository {
