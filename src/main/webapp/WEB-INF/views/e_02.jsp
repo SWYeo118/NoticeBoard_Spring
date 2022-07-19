@@ -63,14 +63,13 @@ a {
 			<c:param name="cPage" value="${paginationDatas.nPage}"/>
 		</c:url>
 		
-		<!-- ne는 not equal, 즉 !=의 의미이다. -->
 		<c:if test="${ppPage ne 0 && pPage ne 0}">
 		  <a href=<c:out value="${urlppPage}"/>><c:out value="<<"/></a>
 		  <a href=<c:out value="${urlppPage}"/>><c:out value="<"/></a>
 		</c:if>
 		
-		<c:forEach var="i" begin="${paginationDatas.startPage}" end="${paginationDatas.lastPage}">
-		  <b><a href = 'e_02?cPage=${i}'>${i}</a></b>
+		<c:forEach var="i" begin="${cPageInt}" end="${totalPage}">
+		  <b><a href = 'e_02?cPage=${i-1}'>${i}</a></b>
 		</c:forEach>
 		      
 		<c:if test="${nnPage ne 0 && nPage ne 0}">

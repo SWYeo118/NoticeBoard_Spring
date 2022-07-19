@@ -14,6 +14,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -50,8 +51,8 @@ public class NoticeService {
 		}
 	}
 	
-	public List<Notice> selectAll() {
-		List<Notice> selectAllNotice = noticeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+	public Page<Notice> selectAll(Pageable pageable) {
+		Page<Notice> selectAllNotice = noticeRepository.findAll(pageable);
 		return selectAllNotice;
 	}
 	
@@ -68,7 +69,7 @@ public class NoticeService {
 	public void create(String Title, String Content) {
 		Notice notice = new Notice();
 		notice.setTitle(Title);
-		notice.setDate(new Date()); // 1900년부터 시작, 6월달로 나옴
+		notice.setDate(new Date()); 
 		notice.setContent(Content);
 		notice.setViewingCount(0);
 		noticeRepository.save(notice);
@@ -84,6 +85,14 @@ public class NoticeService {
 			noticeUpdate.setTitle(title);
 			noticeUpdate.setDate(new Date());
 			noticeUpdate.setContent(content);
+			noticeRepository.save(noticeUpdate);
+		});
+	}
+	
+	public void updateById(int id, int viewCount) {
+		Optional<Notice> notice = noticeRepository.findById(id);
+		notice.ifPresent(noticeUpdate->{
+			noticeUpdate.setViewingCount(viewCount);
 			noticeRepository.save(noticeUpdate);
 		});
 	}

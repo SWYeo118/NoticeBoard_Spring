@@ -30,12 +30,12 @@ class NoticeTest {
 		first.setViewingCount(0);
 		noticeRepository.save(first);
 		
-		NoticeReply noticeReplys = new NoticeReply();
-		noticeReplys.setAuthor("아이유사랑해");
-		noticeReplys.setDate(new Date()); // 1900년부터 시작, 6월달로 나옴
-		noticeReplys.setContent("카리나예쁘지않음?");
-		noticeReplys.setNotice(first);
-		noticeReplyRepository.save(noticeReplys);
+//		NoticeReply noticeReplys = new NoticeReply();
+//		noticeReplys.setAuthor("아이유사랑해");
+//		noticeReplys.setDate(new Date()); // 1900년부터 시작, 6월달로 나옴
+//		noticeReplys.setContent("카리나예쁘지않음?");
+//		noticeReplys.setNotice(first);
+//		noticeReplyRepository.save(noticeReplys);
 	}
 }
 

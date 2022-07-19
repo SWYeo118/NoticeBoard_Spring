@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,15 @@ public class NoticeController {
 
 	@RequestMapping(value = "")
 	public String e_02(Model model, HttpServletRequest req) throws ClassNotFoundException, SQLException {
-		model.addAttribute("noticeDataAll", noticeService.selectAll());
+		Integer cPageInt = 0;
+		if (cPageInt != 0) {
+			PageRequest pageRequest = PageRequest.of(cPageInt, 10, Sort.by(Sort.Direction.DESC, "id"));
+		}
+		PageRequest pageRequest = PageRequest.of(cPageInt, 10, Sort.by(Sort.Direction.DESC, "id"));
+		int totalPage = noticeService.selectAll(pageRequest).getTotalPages();
+		model.addAttribute("noticeDataAll", noticeService.selectAll(pageRequest).getContent());
+		model.addAttribute("cPageInt", cPageInt + 1);
+		model.addAttribute("totalPage", totalPage);
 		return "e_02";
 	}
 	
@@ -42,8 +51,12 @@ public class NoticeController {
 	public String e_02_oneview(Model model, HttpServletRequest req) throws ClassNotFoundException, SQLException {
 		String key = req.getParameter("key");
 		Integer keyNum = Integer.parseInt(key);
+		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount() + 1;
+		noticeService.updateById(keyNum, viewingNum);
 		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
 		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
+		model.addAttribute("viewingNum", viewingNum);
+		
 		return "e_02_oneview";
 	}
 	

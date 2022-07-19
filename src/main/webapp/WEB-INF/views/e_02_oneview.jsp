@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 				<td><b>조회수</b></td>
-				<td><c:out value="${noticeSelectOne.viewingCount}" /></td>
+				<td><c:out value="${viewingNum}" /></td>
 			</tr>
 			<tr>
 				<td><b>내용</b></td>
