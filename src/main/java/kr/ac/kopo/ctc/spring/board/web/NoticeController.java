@@ -151,13 +151,15 @@ public class NoticeController {
 	public String e_02_replyWrite(Model model, HttpServletRequest req)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
 		req.setCharacterEncoding("utf-8");
-		NoticeRepository noticedao = new NoticeService();
 		String key = req.getParameter("key");
-		int keyNum = Integer.parseInt(key);
+		Integer keyNum = Integer.parseInt(key);
+		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount();
 		LocalDate now = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String formatDate = now.format(formatter);
-
+		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
+		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
+		model.addAttribute("viewingNum", viewingNum);
 		model.addAttribute("formatDate", formatDate);
 		model.addAttribute("key", key);
 		model.addAttribute("keyNum", keyNum);
@@ -168,36 +170,11 @@ public class NoticeController {
 	public String allview_replyWrite(Model model, HttpServletRequest req)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
 		req.setCharacterEncoding("utf-8");
-		LocalDate now = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String formatDate = now.format(formatter);
-		String bar;
-		String barSum = "";
-		String replyTitle = "";
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
-		Statement stmt = conn.createStatement();
+		String key = req.getParameter("key");
+		Integer keyNum = Integer.parseInt(key);
 		String replyContent = req.getParameter("replyContent");
-		String originalPostId = req.getParameter("originalPostId");
-		String replyLevel = req.getParameter("replyLevel");
-		int replyLevelInt = Integer.parseInt(replyLevel);
-		String replyViewOrder = req.getParameter("replyViewOrder");
-		String title = req.getParameter("replyTitle");
-		if (replyLevelInt >= 2) {
-			for (int i = 0; i < replyLevelInt - 1; i++) {
-				bar = "↳";
-				barSum += bar;
-			}
-			replyTitle = "↳" + barSum + title;
-		} else {
-			replyTitle = "↳" + title;
-		}
-		stmt.execute(
-				"insert into gongji (title, date, content, viewingCount, replyViewOrder, originalPostId, replyLevel) values('"
-						+ replyTitle + "','" + formatDate + "','" + replyContent + "', 0, '" + replyViewOrder + "', '"
-						+ originalPostId + "', '" + replyLevel + "');");
-		stmt.close();
-		conn.close();
+		String replyAuthor = req.getParameter("replyAuthor");
+		noticeService.createReply(replyContent, replyAuthor, keyNum);
 		return "redirect:/e_02";
 	}
 	

@@ -75,6 +75,17 @@ public class NoticeService {
 		noticeRepository.save(notice);
 	}
 	
+	public void createReply(String replyContent, String replyAuthor, Integer noticeId) {
+		Notice notice = new Notice();
+		notice.setId(noticeId);
+		NoticeReply noticeReply = new NoticeReply();
+		noticeReply.setAuthor(replyAuthor);
+		noticeReply.setDate(new Date());
+		noticeReply.setContent(replyContent);
+		noticeReply.setNotice(notice);
+		noticeReplyRepository.save(noticeReply);
+	}
+	
 	public void delete(int id) {
 		noticeRepository.deleteById(id);
 	}
