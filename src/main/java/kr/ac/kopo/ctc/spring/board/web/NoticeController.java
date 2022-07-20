@@ -154,16 +154,39 @@ public class NoticeController {
 		String key = req.getParameter("key");
 		Integer keyNum = Integer.parseInt(key);
 		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount();
-		LocalDate now = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String formatDate = now.format(formatter);
 		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
 		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
 		model.addAttribute("viewingNum", viewingNum);
-		model.addAttribute("formatDate", formatDate);
-		model.addAttribute("key", key);
 		model.addAttribute("keyNum", keyNum);
 		return "e_02_replyWrite";
+	}
+	
+	@RequestMapping(value = "replyDelete")
+	public String e_02_replyDelete(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		String key = req.getParameter("key");
+		Integer keyNum = Integer.parseInt(key);
+		String keyR = req.getParameter("keyR");
+		int keyNumR = Integer.parseInt(keyR);
+		noticeService.deleteReply(keyNumR);
+		return "redirect:/e_02/oneview?key=" + keyNum;
+	}
+	
+	@RequestMapping(value = "replyUpdate")
+	public String e_02_replyUpdate(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String key = req.getParameter("key");
+		Integer keyNum = Integer.parseInt(key);
+		String keyR = req.getParameter("keyR");
+		int keyNumR = Integer.parseInt(keyR);
+		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount();
+		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
+		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
+		model.addAttribute("viewingNum", viewingNum);
+		model.addAttribute("keyNum", keyNum);
+		model.addAttribute("keyNumR", keyNumR);
+		return "redirect:/e_02/replyUpdate";
 	}
 
 	@RequestMapping(value = "allview_replyWrite")

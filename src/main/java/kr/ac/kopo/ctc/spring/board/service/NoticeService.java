@@ -90,6 +90,10 @@ public class NoticeService {
 		noticeRepository.deleteById(id);
 	}
 	
+	public void deleteReply(int id) {
+		noticeReplyRepository.deleteById(id);
+	}
+	
 	public void updateById(int id, String title, String content) {
 		Optional<Notice> notice = noticeRepository.findById(id);
 		notice.ifPresent(noticeUpdate->{

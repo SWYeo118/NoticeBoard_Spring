@@ -8,7 +8,6 @@
 </head>
 <body>
 <center>
-	<FORM METHOD=POST name='fm'>
 		<table width=650 border=1 cellspacing=0 cellpadding=5 style="margin: auto; text-align: center;">
 			<tr>
 				<td width=170><b>번호</b></td>
@@ -39,13 +38,14 @@
 		<table border=1 cellspacing=0 cellpadding=3 style="margin: auto; text-align: center;">
 		<c:forEach var="noticeReply" items="${noticeReplys}">
 		<tr>
-			<td width=500><b>댓글 내용</b><p align=center>
+			<td width=510><b>댓글 내용</b><span style="position: absolute; left: 50%;"> | <a href="/e_02/replyUpdate?keyR=${noticeReply.id}&key=${noticeSelectOne.id}">수정</a> | <a href="/e_02/replyDelete?keyR=${noticeReply.id}&key=${noticeSelectOne.id}">삭제</a> |</span> 
+			<p align=center>
 					<c:out value="${noticeReply.content}" />
 				</p></td>
-			<td width=100><b>작성자</b><p align=center>
+			<td width=90><b>작성자</b><p align=center>
 					<c:out value="${noticeReply.author}" /></a>
 				</p></td>
-			<td width=170><b>작성시간</b><p align=center>
+			<td width=150><b>작성시간</b><p align=center>
 					<c:out value="${noticeReply.date}" />
 				</p></td>
 		</tr>
@@ -53,17 +53,12 @@
 		</table>
 		<table style="margin: auto; text-align: right;">
 			<tr>
-				<td><input type=button value="목록"
-					OnClick="location.href='/e_02'"></td>
-				<td><input type=button value="수정"
-					OnClick="location.href='update?key=${noticeSelectOne.id}'"></td>
-				<td><input type=button value="삭제" 
-					OnClick="location.href='delete?key=${noticeSelectOne.id}'"></td>
-				<td><input type=button value="댓글"
-				 	OnClick="location.href='replyWrite?key=${noticeSelectOne.id}'"></td>
+				<td><button OnClick="location.href='/e_02'">목록</button></td>
+				<td><button OnClick="location.href='update?key=${noticeSelectOne.id}'">수정</button></td>
+				<td><button OnClick="location.href='delete?key=${noticeSelectOne.id}'">삭제</button></td>
+				<td><button OnClick="location.href='replyWrite?key=${noticeSelectOne.id}'">댓글</button></td>
 			</tr>
 		</table>
-	</FORM>
 </center>
 </body>
 </html>
