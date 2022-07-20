@@ -27,7 +27,7 @@
 			</tr>
 			<tr>
 				<td><b>내용</b></td>
-				<td><textarea style='width:500px; height:250px;' name=content readonly>${noticeSelectOne.content}</textarea></td>
+				<td><textarea style='width:495px; height:250px;' name=content readonly>${noticeSelectOne.content}</textarea></td>
 			</tr>
 		</table>
 		<table width=650 height=50 border=0 cellspacing=0 cellpadding=0 style="margin: auto; text-align: center; font-size: 27px">

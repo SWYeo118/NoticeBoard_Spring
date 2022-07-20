@@ -61,14 +61,12 @@ textarea {
 <br><br>
 <table border=1 cellspacing=0 cellpadding=2 style="margin: auto; text-align: center;">
 <tr>
-<td width=490><b>새 댓글 작성</b><p align=center></p></td>
+<td width=550><b>새 댓글 작성</b><p align=center></p></td>
 <td width=100><b>작성자</b><p align=center></p></td>
-<td width=160><b>작성시간</b><p align=center></p></td>
 </tr>
 <tr>
-<td width=500><textarea style='width:500px; height:170px;' name=replyContent required></textarea></td>
+<td width=550><textarea style='width:500px; height:170px;' name=replyContent required></textarea></td>
 <td width=100><textarea style='width:100px; height:170px;' name=replyAuthor required></textarea></td>
-<td width=170>${formatDate}<input type=hidden name=replyTime></td>
 </tr>
 </table>
 <table width=650>

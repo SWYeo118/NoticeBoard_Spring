@@ -180,13 +180,17 @@ public class NoticeController {
 		Integer keyNum = Integer.parseInt(key);
 		String keyR = req.getParameter("keyR");
 		int keyNumR = Integer.parseInt(keyR);
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formatDate = now.format(formatter);
 		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount();
 		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
 		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
 		model.addAttribute("viewingNum", viewingNum);
 		model.addAttribute("keyNum", keyNum);
 		model.addAttribute("keyNumR", keyNumR);
-		return "redirect:/e_02/replyUpdate";
+		model.addAttribute("formatDate", formatDate);
+		return "e_02_replyUpdate";
 	}
 
 	@RequestMapping(value = "allview_replyWrite")
