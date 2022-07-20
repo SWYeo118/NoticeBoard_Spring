@@ -56,17 +56,18 @@ public class NoticeController {
 		// 페이지사이즈 10
 		int pageSize = noticeService.selectAll(pageRequest).getSize();
 		
+		// 첫페이지, 마지막페이지, 다음페이지, 이전페이지 세팅
 		int ppPage = 0;
 		int nnPage = totalPage - 1;
 		int nPage = 0;
 		int pPage = 0;
-		if (totalPage < nPage + pageSize) {
+		if (totalPage <= nPage + pageSize) {
 			nPage = totalPage - 1;
 		} else {
 			nPage = keyNum + totalPage;
 		}
 		
-		if (pPage + pageSize > totalPage) {
+		if (pPage + pageSize >= totalPage) {
 			pPage = keyNum - pageSize;
 		}
 		
@@ -143,6 +144,60 @@ public class NoticeController {
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		noticeService.updateById(keyNum, title, content);
+		return "redirect:/e_02";
+	}
+	
+	@RequestMapping(value = "replyWrite")
+	public String e_02_replyWrite(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		NoticeRepository noticedao = new NoticeService();
+		String key = req.getParameter("key");
+		int keyNum = Integer.parseInt(key);
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formatDate = now.format(formatter);
+
+		model.addAttribute("formatDate", formatDate);
+		model.addAttribute("key", key);
+		model.addAttribute("keyNum", keyNum);
+		return "e_02_replyWrite";
+	}
+
+	@RequestMapping(value = "allview_replyWrite")
+	public String allview_replyWrite(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String formatDate = now.format(formatter);
+		String bar;
+		String barSum = "";
+		String replyTitle = "";
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
+		Statement stmt = conn.createStatement();
+		String replyContent = req.getParameter("replyContent");
+		String originalPostId = req.getParameter("originalPostId");
+		String replyLevel = req.getParameter("replyLevel");
+		int replyLevelInt = Integer.parseInt(replyLevel);
+		String replyViewOrder = req.getParameter("replyViewOrder");
+		String title = req.getParameter("replyTitle");
+		if (replyLevelInt >= 2) {
+			for (int i = 0; i < replyLevelInt - 1; i++) {
+				bar = "↳";
+				barSum += bar;
+			}
+			replyTitle = "↳" + barSum + title;
+		} else {
+			replyTitle = "↳" + title;
+		}
+		stmt.execute(
+				"insert into gongji (title, date, content, viewingCount, replyViewOrder, originalPostId, replyLevel) values('"
+						+ replyTitle + "','" + formatDate + "','" + replyContent + "', 0, '" + replyViewOrder + "', '"
+						+ originalPostId + "', '" + replyLevel + "');");
+		stmt.close();
+		conn.close();
 		return "redirect:/e_02";
 	}
 	
@@ -355,21 +410,6 @@ public class NoticeController {
 //		stmt.close();
 //		conn.close();
 //		return "redirect:/e_02";
-//	}
-//
-//	@RequestMapping(value = "replyInsert")
-//	public String e_02_replyInsert(Model model) {
-//		return "e_02_replyInsert";
-//	}
-//	
-//	@RequestMapping(value = "oneview")
-//	public void e_02_oneview(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String viewPath = "/WEB-INF/views/e_02_oneview.jsp";
-//        // 컨트롤러에서 뷰로 이동할 때 사용
-//        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
-//        // forward : 실제 호출,  다른 서블릿이나 JSP로 이동할 수 있는 기능이다.
-//        // 서버 내부에서 다시 호출이 발생한다.
-//        dispatcher.forward(request, response);
 //	}
 
 }
