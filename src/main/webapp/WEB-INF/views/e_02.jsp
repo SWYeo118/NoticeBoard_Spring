@@ -47,6 +47,8 @@ a {
 		</tr>
 	</table>
 		<div class="text-center">
+		
+		<c:if test="${search == null}">
 		<c:url var="urlppPage" value="/e_02" >
 			<c:param name="cPage" value="${ppPage}"/>
 		</c:url>
@@ -62,17 +64,56 @@ a {
 		<c:url var="urlnPage" value="/e_02">
 			<c:param name="cPage" value="${nPage}"/>
 		</c:url>
+		
 		  <a href=<c:out value="${urlppPage}"/>><c:out value="<<"/></a>
 		  <a href=<c:out value="${urlppPage}"/>><c:out value="<"/></a>
+		  
 		<c:forEach var="i" begin="${cPageInt}" end="${totalPage}">
 		  <b><a href = 'e_02?cPage=${i-1}'>${i}</a></b>
 		</c:forEach>
-		<c:if test="${nnPage ne 0 && nPage ne 0}">
 			<a href=<c:out value="${urlnPage}"/>><c:out value=">"/></a>
 			<a href=<c:out value="${urlnnPage}"/>><c:out value=">>"/></a>
 		</c:if>
-		</center>
+		<c:if test="${search != null}">
+		<c:url var="urlppPage" value="/e_02/searching" >
+			<c:param name="search" value="${search}"/>
+			<c:param name="cPage" value="${ppPage}"/>
+		</c:url>
+		
+		<c:url var="urlpPage" value="/e_02/searching" >
+		<c:param name="search" value="${search}"/>
+		<c:param name="cPage" value="${pPage}"/>
+		</c:url>
+		
+		<c:url var="urlnnPage" value="/e_02/searching" >
+		<c:param name="search" value="${search}"/>
+		<c:param name="cPage" value="${nnPage}"/>
+		</c:url>
+		
+		<c:url var="urlnPage" value="/e_02/searching" >
+		<c:param name="search" value="${search}"/>
+		<c:param name="cPage" value="${nPage}"/>
+		</c:url>
+		
+		  <a href=<c:out value="${urlppPage}"/>><c:out value="<<"/></a>
+		  <a href=<c:out value="${urlppPage}"/>><c:out value="<"/></a>
+		  
+		<c:forEach var="i" begin="${cPageInt}" end="${totalPage}">
+		  <b><a href = 'searching?search=${search}&cPage=${i-1}'>${i}</a></b>
+		</c:forEach>
+			<a href=<c:out value="${urlnPage}"/>><c:out value=">"/></a>
+			<a href=<c:out value="${urlnnPage}"/>><c:out value=">>"/></a>
+		</c:if>
+		
 	</div>
+	<br><br>
+	<div class="searchBox">
+	<form action="/e_02/searching">
+	<label><input type="text" name="search" placeholder="검색할 제목을 입력하세요" /></label>
+	<span><input type="submit" value="검색"></span>
+	</div>
+	</form>
+	</center>
 	
 </body>
 </html>

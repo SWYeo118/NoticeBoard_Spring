@@ -126,8 +126,13 @@ public class NoticeService {
 		});
 	}
 	
-	public List<Notice> searchByTitle(String title){
-		
+	public List<Notice> searchByTitle(String title) {
+		return noticeRepository.findByTitleContaining(title);
+	}
+	
+	public Page<Notice> searchByTitlePage(String title, Pageable pageable) {
+		Page<Notice> searchByTitlePage = noticeRepository.findByTitleContaining(title, pageable);
+		return searchByTitlePage;
 	}
 }
 
