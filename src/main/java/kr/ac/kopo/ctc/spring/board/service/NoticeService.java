@@ -31,7 +31,7 @@ public class NoticeService {
 	
 	@Autowired
 	NoticeReplyRepository noticeReplyRepository;
-	
+	 
 	
 	public NoticeService() {
 		try {
@@ -64,6 +64,11 @@ public class NoticeService {
 	public List<NoticeReply> selectReply(Integer id) {
 		List<NoticeReply> selectNoticeReply = noticeReplyRepository.findByNoticeId(id);
 		return selectNoticeReply;
+	}
+	
+	public Optional<NoticeReply> selectReplyOne(int id) {
+		Optional<NoticeReply> selectNoticeReplyOne = noticeReplyRepository.findById(id);
+		return selectNoticeReplyOne;
 	}
 	
 	public void create(String Title, String Content) {
@@ -110,6 +115,19 @@ public class NoticeService {
 			noticeUpdate.setViewingCount(viewCount);
 			noticeRepository.save(noticeUpdate);
 		});
+	}
+	
+	public void updateReplyById(Integer id, String contentReply) {
+		Optional<NoticeReply> noticeReply = noticeReplyRepository.findById(id);
+		noticeReply.ifPresent(noticeUpdate->{
+			noticeUpdate.setContent(contentReply);
+			noticeUpdate.setDate(new Date());
+			noticeReplyRepository.save(noticeUpdate);
+		});
+	}
+	
+	public List<Notice> searchByTitle(String title){
+		
 	}
 }
 

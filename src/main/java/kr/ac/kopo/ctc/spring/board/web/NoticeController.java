@@ -184,12 +184,16 @@ public class NoticeController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String formatDate = now.format(formatter);
 		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount();
+		String replyContent = noticeService.selectReplyOne(keyNumR).get().getContent();
+		String replyAuthor = noticeService.selectReplyOne(keyNumR).get().getAuthor();
 		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
 		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
 		model.addAttribute("viewingNum", viewingNum);
 		model.addAttribute("keyNum", keyNum);
 		model.addAttribute("keyNumR", keyNumR);
 		model.addAttribute("formatDate", formatDate);
+		model.addAttribute("replyContent", replyContent);
+		model.addAttribute("replyAuthor", replyAuthor);
 		return "e_02_replyUpdate";
 	}
 
@@ -202,6 +206,17 @@ public class NoticeController {
 		String replyContent = req.getParameter("replyContent");
 		String replyAuthor = req.getParameter("replyAuthor");
 		noticeService.createReply(replyContent, replyAuthor, keyNum);
+		return "redirect:/e_02";
+	}
+	
+	@RequestMapping(value = "allview_replyUpdate")
+	public String allview_replyUpdate(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String key = req.getParameter("keyNumR");
+		Integer keyNumR = Integer.parseInt(key);
+		String replyContent = req.getParameter("replyContent");
+		noticeService.updateReplyById(keyNumR, replyContent);
 		return "redirect:/e_02";
 	}
 	

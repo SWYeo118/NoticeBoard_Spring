@@ -13,7 +13,7 @@ textarea {
 </head>
 <body>
 <center>
-<FORM METHOD=POST action='allview_replyWrite'>
+<FORM METHOD=POST action='allview_replyUpdate'>
 <table width=650 border=1 cellspacing=0 cellpadding=5 style="margin: auto; text-align: center;">
 <tr>
 	<td width=170><b>번호</b></td>
@@ -65,15 +65,16 @@ textarea {
 <td width=100><b>작성자</b><p align=center></p></td>
 </tr>
 <tr>
-<td width=550><textarea style='width:500px; height:170px;' name=replyContent required>${noticeReply.content}</textarea></td>
-<td width=100><textarea style='width:100px; height:170px;' name=replyAuthor readonly>${noticeReply.author}</textarea></td>
+<td width=550><textarea style='width:500px; height:170px;' name=replyContent required>${replyContent}</textarea></td>
+<td width=100><textarea style='width:100px; height:170px;' name=replyAuthor readonly>${replyAuthor}</textarea></td>
+<input type=hidden value="${keyNumR}" name="keyNumR" style="margin: auto;">
 </tr>
 </table>
 <table width=650>
 <tr>
 	<td width=600></td>
 	<td><input type=button value="취소" OnClick="history.back()" style="margin: auto;"></td>
-	<td><input type=submit value="쓰기" style="margin: auto;"></td>
+	<td><input type=submit value="수정" style="margin: auto;"></td>
 	
 	<!--	<td><input type=button value="취소" OnClick="location.href='/e_02'" style="margin: auto;"></td> -->
 	
