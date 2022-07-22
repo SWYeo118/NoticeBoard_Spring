@@ -81,14 +81,24 @@ public class NoticeService {
 	}
 	
 	public void createReply(String replyContent, String replyAuthor, Integer noticeId) {
-		Notice notice = new Notice();
-		notice.setId(noticeId);
-		NoticeReply noticeReply = new NoticeReply();
-		noticeReply.setAuthor(replyAuthor);
-		noticeReply.setDate(new Date());
-		noticeReply.setContent(replyContent);
-		noticeReply.setNotice(notice);
-		noticeReplyRepository.save(noticeReply);
+		Notice notice = noticeRepository.findById(noticeId).get();
+		NoticeReply noticeReplyRoot = new NoticeReply();
+		noticeReplyRoot.setAuthor(replyAuthor);
+		noticeReplyRoot.setDate(new Date());
+		noticeReplyRoot.setContent(replyContent);
+		noticeReplyRoot.setNotice(notice);
+		noticeReplyRepository.save(noticeReplyRoot);
+	}
+	
+	public void createReReply(String replyContent, String replyAuthor, Integer Id) {
+		NoticeReply noticeReplyRoot = new NoticeReply();
+		NoticeReply noticeReplyRootFind = noticeReplyRepository.findById(Id).get();
+		noticeReplyRoot.setAuthor(replyAuthor);
+		noticeReplyRoot.setDate(new Date());
+		noticeReplyRoot.setContent(replyContent);
+		noticeReplyRoot.setNotice(noticeReplyRootFind.getNotice());
+		noticeReplyRoot.setNoticeReplyRoot(noticeReplyRootFind);
+		noticeReplyRepository.save(noticeReplyRoot);
 	}
 	
 	public void delete(int id) {

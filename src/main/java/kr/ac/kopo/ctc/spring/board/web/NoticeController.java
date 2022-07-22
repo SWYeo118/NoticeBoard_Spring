@@ -87,8 +87,9 @@ public class NoticeController {
 		Integer keyNum = Integer.parseInt(key);
 		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount() + 1;
 		noticeService.updateById(keyNum, viewingNum);
-		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
-		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
+		Notice notice = noticeService.selectOne(keyNum).get();
+		model.addAttribute("noticeSelectOne", notice);
+		model.addAttribute("noticeReplys", noticeService.selectOne(keyNum).get().getNoticeReplys());
 		model.addAttribute("viewingNum", viewingNum);
 		
 		return "e_02_oneview";
@@ -161,6 +162,23 @@ public class NoticeController {
 		return "e_02_replyWrite";
 	}
 	
+	@RequestMapping(value = "replyReReply")
+	public String e_02_replyReReply(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String key = req.getParameter("key");
+		Integer keyNum = Integer.parseInt(key);
+		String keyR = req.getParameter("keyR");
+		Integer keyNumR = Integer.parseInt(keyR);
+		int viewingNum = noticeService.selectOne(keyNum).get().getViewingCount();
+		model.addAttribute("noticeSelectOne", noticeService.selectOne(keyNum).get());
+		model.addAttribute("noticeReplys", noticeService.selectReply(keyNum));
+		model.addAttribute("viewingNum", viewingNum);
+		model.addAttribute("keyNum", keyNum);
+		model.addAttribute("keyNumR", keyNumR);
+		return "e_02_replyReReply";
+	}
+	
 	@RequestMapping(value = "replyDelete")
 	public String e_02_replyDelete(Model model, HttpServletRequest req)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
@@ -206,6 +224,18 @@ public class NoticeController {
 		String replyContent = req.getParameter("replyContent");
 		String replyAuthor = req.getParameter("replyAuthor");
 		noticeService.createReply(replyContent, replyAuthor, keyNum);
+		return "redirect:/e_02";
+	}
+	
+	@RequestMapping(value = "allview_ReReply")
+	public String allview_ReReply(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String keyR = req.getParameter("keyR");
+		Integer keyNumR = Integer.parseInt(keyR);
+		String replyContent = req.getParameter("replyContent");
+		String replyAuthor = req.getParameter("replyAuthor");
+		noticeService.createReReply(replyContent, replyAuthor, keyNumR);
 		return "redirect:/e_02";
 	}
 	
