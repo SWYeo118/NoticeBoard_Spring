@@ -180,17 +180,6 @@ public class NoticeController {
 		return "redirect:/e_02/oneview?key=" + keyNum;
 	}
 	
-	@RequestMapping(value = "reReplyDelete")
-	public String e_02_reReplyDelete(Model model, HttpServletRequest req)
-			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
-		String key = req.getParameter("key");
-		Integer keyNum = Integer.parseInt(key);
-		String keyR = req.getParameter("keyR");
-		int keyNumR = Integer.parseInt(keyR);
-		noticeService.deleteReReply(keyNumR);
-		return "redirect:/e_02/oneview?key=" + keyNum;
-	}
-	
 	@RequestMapping(value = "replyUpdate")
 	public String e_02_replyUpdate(Model model, HttpServletRequest req)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {

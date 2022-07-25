@@ -3,21 +3,15 @@ package kr.ac.kopo.ctc.spring.board.service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.kopo.ctc.spring.board.domain.Notice;
 import kr.ac.kopo.ctc.spring.board.domain.NoticeReply;
@@ -108,11 +102,6 @@ public class NoticeService {
 	
 	public void deleteReply(int id) {
 		noticeReplyRepository.deleteById(id);
-	}
-	
-	@Transactional
-	public void deleteReReply(int id) {
-		noticeReplyRepository.deleteByNoticeReplyRootId(id);
 	}
 	
 	public void updateById(int id, String title, String content) {
