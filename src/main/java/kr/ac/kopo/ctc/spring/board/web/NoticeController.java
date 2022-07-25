@@ -1,30 +1,20 @@
 package kr.ac.kopo.ctc.spring.board.web;
 
 import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.kopo.ctc.spring.board.domain.Notice;
-import kr.ac.kopo.ctc.spring.board.dto.Pagination;
-import kr.ac.kopo.ctc.spring.board.repository.NoticeRepository;
-import kr.ac.kopo.ctc.spring.board.repository.PaginationService;
 import kr.ac.kopo.ctc.spring.board.service.NoticeService;
-import kr.ac.kopo.ctc.spring.board.service.PaginationServiceImpl;
 
 @Controller
 @RequestMapping(value = "/e_02")
@@ -187,6 +177,17 @@ public class NoticeController {
 		String keyR = req.getParameter("keyR");
 		int keyNumR = Integer.parseInt(keyR);
 		noticeService.deleteReply(keyNumR);
+		return "redirect:/e_02/oneview?key=" + keyNum;
+	}
+	
+	@RequestMapping(value = "reReplyDelete")
+	public String e_02_reReplyDelete(Model model, HttpServletRequest req)
+			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
+		String key = req.getParameter("key");
+		Integer keyNum = Integer.parseInt(key);
+		String keyR = req.getParameter("keyR");
+		int keyNumR = Integer.parseInt(keyR);
+		noticeService.deleteReReply(keyNumR);
 		return "redirect:/e_02/oneview?key=" + keyNum;
 	}
 	

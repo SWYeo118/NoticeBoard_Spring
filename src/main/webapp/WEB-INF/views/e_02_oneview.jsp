@@ -47,7 +47,7 @@
 				<c:forEach var="noticeReReply" items="${noticeReplys}">
 					<c:if test="${noticeReply.id eq noticeReReply.noticeReplyRoot.id}">
 					<tr>
-							<td width=510><b>대댓글 내용</b><span style="position: absolute; left: 50%;"> | <a href="/e_02/replyUpdate?keyR=${noticeReply.id}&key=${noticeSelectOne.id}">수정</a> | <a href="/e_02/replyDelete?keyR=${noticeReReply.noticeReplyRoot.id}&key=${noticeSelectOne.id}">삭제</a> | </span> 
+							<td width=510><b>대댓글 내용</b><span style="position: absolute; left: 50%;"> | <a href="/e_02/replyUpdate?keyR=${noticeReply.id}&key=${noticeSelectOne.id}">수정</a> | <a href="/e_02/reReplyDelete?keyR=${noticeReReply.noticeReplyRoot.id}&key=${noticeSelectOne.id}">삭제</a> | </span> 
 							<p align=center><c:out value="${noticeReReply.content}" /></p></td>
 							<td width=90><b>작성자</b><p align=center><c:out value="${noticeReReply.author}" /></a></p></td>
 							<td width=150><b>작성시간</b><p align=center><c:out value="${noticeReReply.date}" /></p></td>

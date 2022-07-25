@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.kopo.ctc.spring.board.domain.Notice;
 import kr.ac.kopo.ctc.spring.board.domain.NoticeReply;
@@ -107,6 +108,11 @@ public class NoticeService {
 	
 	public void deleteReply(int id) {
 		noticeReplyRepository.deleteById(id);
+	}
+	
+	@Transactional
+	public void deleteReReply(int id) {
+		noticeReplyRepository.deleteByNoticeReplyRootId(id);
 	}
 	
 	public void updateById(int id, String title, String content) {

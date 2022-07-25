@@ -12,6 +12,7 @@ import kr.ac.kopo.ctc.spring.board.domain.NoticeReply;
 @Repository
 public interface NoticeReplyRepository extends JpaRepository<NoticeReply, Integer>, JpaSpecificationExecutor<NoticeReply>, PagingAndSortingRepository<NoticeReply, Integer>  {
 	List<NoticeReply> findByNoticeId(Integer id);
-//	List<NoticeReply> findByNoticeReplyRoot_Id(Integer num);
+	void deleteByNoticeReplyRoot(int id);
+	void deleteByNoticeReplyRootId(int id);
 	
 }
