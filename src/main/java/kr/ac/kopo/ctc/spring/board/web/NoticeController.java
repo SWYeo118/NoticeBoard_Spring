@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.kopo.ctc.spring.board.domain.Notice;
 import kr.ac.kopo.ctc.spring.board.service.NoticeService;
@@ -91,13 +92,12 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "allview_pageWrite")
-	public String allview_pageWrite(Model model, HttpServletRequest req)
+	public String allview_pageWrite(Model model, @RequestParam("title") String title, @RequestParam("content") String content)
 			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
-		String title = req.getParameter("title");
-		String content = req.getParameter("content");
 		noticeService.create(title, content);
 		return "redirect:/e_02";
 	}
+	
 	
 	@RequestMapping(value = "pageWrite")
 	public String e_02_pageWrite(Model model, HttpServletRequest req)
