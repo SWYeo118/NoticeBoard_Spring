@@ -1,9 +1,5 @@
 package kr.ac.kopo.ctc.spring.board.service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,25 +22,6 @@ public class NoticeService {
 	
 	@Autowired
 	NoticeReplyRepository noticeReplyRepository;
-	 
-	
-	public NoticeService() {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver"); // jdbc Driver에 연결
-		} catch (ClassNotFoundException e) {
-			throw new IllegalStateException("jdbc 드라이버 로드 실패" + e); // 연결 실패 시 에러메세지
-		}
-	}
-	
-	public void dropTable() {
-		String sql = "drop table notice";
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root",
-				"CJDghd9311@"); PreparedStatement stmt = conn.prepareStatement(sql);) {
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new IllegalStateException("drop 실패 " + e.getMessage());
-		}
-	}
 	
 	public Page<Notice> selectAll(Pageable pageable) {
 		Page<Notice> selectAllNotice = noticeRepository.findAll(pageable);

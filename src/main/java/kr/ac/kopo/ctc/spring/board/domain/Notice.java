@@ -35,9 +35,12 @@ public class Notice {
 	@Column
 	private Integer viewingCount;
 	
-	// 기본값은 LAZY, 그래야지 boardItem의 모든 값을 다 가져 올 필요는 없으니까. 
+	// 부모 내에 있는 자식(Reply) Column
+	// 기본값은 LAZY, 그래야지 자식의 모든 값을 다 가져 올 필요는 없으니까. 
 	// 기본적으로는 모든 값을 다 가져왔다고 치고 진행이 된다.
-	// cascade 설정이 되어있으면 boardGroup이 지워지면, 연결되어있는 boardGroup이 모두 지워진다.
+	// cascade 설정이 되어있으면 부모가 지워지면, 연결되어있는 자식이 모두 지워진다.
+	// Notice라는 부모 클래스의 속성 중에 noticeReplys라는 자식이 포함되는 것! 따라서 noticeReplys는 자식 클래스이다.
+	// mappedBy는 자식클래스에서만 존재한다.
 	@JsonManagedReference
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy="notice")
 	private List<NoticeReply> noticeReplys;

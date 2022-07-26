@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import kr.ac.kopo.ctc.spring.board.domain.Notice;
 import kr.ac.kopo.ctc.spring.board.service.NoticeService;
 
+// 각각 Domain은 @Entity, Controller는 @Controller, Repository는 @Repository annotation을 적어준다.
+
 @Controller
 @RequestMapping(value = "/e_02")
 public class NoticeController {
@@ -23,6 +25,9 @@ public class NoticeController {
 	@Autowired
 	NoticeService noticeService;
 
+	// Model model, HttpServletRequest req
+	// req.getParameter
+	// Optional에는 .get()이 필요하고 Page에는 .getContent()가 필요
 	@RequestMapping(value = "")
 	public String e_02(Model model, HttpServletRequest req) throws ClassNotFoundException, SQLException {
 		// 키값 cPage 받아서 없으면 1페이지를 보여주도록
@@ -249,8 +254,6 @@ public class NoticeController {
 		if (search == null) {
 			search = "";
 		}
-		
-		
 		
 		// 키값 cPage 받아서 없으면 1
 		String key = req.getParameter("cPage");

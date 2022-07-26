@@ -34,7 +34,9 @@ public class NoticeReply {
 	@Column
 	private Date date;
 	
-	// 기본값은 EAGER, 그래야지 boardGroup의 id값을 다 가져 올 수 있으니까. 
+	// NoticeReply에 있는 부모 속성. 따라서 ManyToOne
+	// 기본값은 EAGER, 그래야지 자식의 id값을 다 가져 올 수 있으니까.
+	// optional=false면 null값이 포함될 수 없고 무조건 값이 들어가야 한다.
 	@JsonBackReference
 	@ManyToOne(optional=false, fetch = FetchType.EAGER)
 	@JoinColumn(name="notice_id")
@@ -45,6 +47,7 @@ public class NoticeReply {
 	@JoinColumn(name="notice_pid")
 	private NoticeReply noticeReplyRoot;
 	
+	// cascade가 적용되는 쪽(자식)에 Cascade.All 설정.
 	@JsonManagedReference
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy="noticeReplyRoot")
 	private List<NoticeReply> noticeReply; 
