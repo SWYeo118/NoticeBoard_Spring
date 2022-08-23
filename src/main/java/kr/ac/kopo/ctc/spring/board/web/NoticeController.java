@@ -23,10 +23,9 @@ import kr.ac.kopo.ctc.spring.board.service.NoticeService;
 @RequestMapping(value = "/e_02")
 public class NoticeController {
 	
-	@Autowired
+	@Autowired                    
 	NoticeService noticeService;
-
-	// Model model, HttpServletRequest req
+	
 	// req.getParameter
 	// Optional에는 .get()이 필요하고 Page에는 .getContent()가 필요
 	@RequestMapping(value = "")
