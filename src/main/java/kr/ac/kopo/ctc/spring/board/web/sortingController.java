@@ -9,7 +9,11 @@ import kr.ac.kopo.ctc.spring.board.service.SelectionSort;
 public class sortingController {
 
 	public static void main(String[] args) {
-
+		
+		
+		
+		
+		
 		// 총 배열의 길이 미리 정하기
 		final int SIZE = 30000;
 
