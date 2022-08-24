@@ -29,7 +29,6 @@ public class sortingController {
 	public static void main(String[] args) {
 
 		try {
-			int i = 0;
 			int k = 0;
 			FileInputStream file = new FileInputStream(new File(filePath, fileName));
 
@@ -39,10 +38,20 @@ public class sortingController {
 			// workbook의 첫번째 sheet를 가저온다.
 			XSSFSheet sheet = workbook.getSheetAt(0);
 
-			XSSFRow rows = sheet.getRow(0);
 			int rowCount = sheet.getPhysicalNumberOfRows();
-			int cellCount = rows.getPhysicalNumberOfCells();
-			int countOfAllCells = rowCount * cellCount;
+			int[] arrIntBase = new int[rowCount];
+			int[] arrIntCompare = new int[rowCount];
+
+			for (k = 1; k < rowCount; k++) {
+				XSSFRow rows = sheet.getRow(k);
+				XSSFCell cell = rows.getCell(8);
+				arrIntBase[k] = (int) cell.getNumericCellValue();
+				arrIntCompare[k] = (int) cell.getNumericCellValue();
+				System.out.println((int) cell.getNumericCellValue()); // getNumericCellValue 메서드는 기본으로 double형 반환
+			}
+
+//			int cellCount = rows.getPhysicalNumberOfCells();
+//			int countOfAllCells = rowCount * cellCount;
 
 			// 만약 특정 이름의 시트를 찾는다면 workbook.getSheet("찾는 시트의 이름");
 			// 만약 모든 시트를 순회하고 싶으면
@@ -53,36 +62,36 @@ public class sortingController {
 
 			// 정렬 알고리즘 선택
 			Sorter sorter = new BubbleSort();
+			Sorter sorter = new InsertionSort();
+			Sorter sorter = new SelectionSort();
 
 			// 각각 다른 방식으로 정렬할 두개의 배열 만들기
-			int[] arrIntBase = new int[countOfAllCells];
-			int[] arrIntCompare = new int[countOfAllCells];
-			String[] arrStringBase = new String[countOfAllCells];
-			String[] arrStringCompare = new String[countOfAllCells];
+//			String[] arrStringBase = new String[rowCount];
+//			String[] arrStringCompare = new String[rowCount];
 
 			// 모든 행(row)들을 조회한다.
-			Iterator<Row> rowIterator = sheet.iterator();
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				// 각각의 행에 존재하는 모든 열(cell)을 순회한다.
-				Iterator<Cell> cellIterator = row.cellIterator();
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-					switch (cell.getCellType()) {
-					case NUMERIC:
-						arrIntBase[i] = (int) cell.getNumericCellValue();
-						arrIntCompare[i] = (int) cell.getNumericCellValue();
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				// 각각의 행에 존재하는 모든 열(cell)을 순회한다.
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//					switch (cell.getCellType()) {
+//					case NUMERIC:
+//						arrIntBase[i] = (int) cell.getNumericCellValue();
+//						arrIntCompare[i] = (int) cell.getNumericCellValue();
 //						System.out.print((int) cell.getNumericCellValue() + "\t"); // getNumericCellValue 메서드는 기본으로 double형 반환
-						i++;
-						break;
-					case STRING:
-						arrStringBase[k] = cell.getStringCellValue();
-						arrStringCompare[k] = cell.getStringCellValue();
+//						i++;
+//						break;
+//					case STRING:
+//						arrStringBase[k] = cell.getStringCellValue();
+//						arrStringCompare[k] = cell.getStringCellValue();
 //						System.out.print(cell.getStringCellValue() + "\t");
-						k++;
-						break;
-					}
-					// cell의 타입을 확인하고, 값을 가져온다.
+//						k++;
+//						break;
+//					}
+			// cell의 타입을 확인하고, 값을 가져온다.
 //					if (cell.getCellType() == CellType.NUMERIC) {
 //						for (int i = 0; i < rowCount; i++) {
 ////							arrIntBase[i] = (int) cell.getNumericCellValue();
@@ -96,11 +105,12 @@ public class sortingController {
 //							System.out.print(cell.getStringCellValue() + "\t");
 //						}
 //					}
-				}
-				System.out.println();
-			}
+
 			long savedTime = System.currentTimeMillis();
 			sorter.sort(arrIntBase);
+			for (int dd : arrIntBase) {
+				System.out.println(dd);
+			}
 			System.out.println(String.format("Custom sorting에 소요된 시간 : %dms", System.currentTimeMillis() - savedTime));
 			savedTime = System.currentTimeMillis();
 			// Dual-Pivot Quick Sort
