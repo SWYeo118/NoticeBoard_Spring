@@ -1,6 +1,6 @@
 package kr.ac.kopo.ctc.spring.board.service;
 
-import kr.ac.kopo.ctc.spring.board.web.sortingController.Sorter;
+import kr.ac.kopo.ctc.spring.board.web.sortingService.Sorter;
 
 public class SelectionSort implements Sorter {
 
