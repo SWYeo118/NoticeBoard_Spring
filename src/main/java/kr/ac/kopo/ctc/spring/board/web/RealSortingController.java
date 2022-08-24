@@ -42,8 +42,10 @@ public class RealSortingController {
 		int selectColumn = Integer.parseInt(req.getParameter("selectColumn"));
 		numBack backDatasBubble = SortingService.doSortBubble(selectColumn);
 		numBack backDatasInsertion = SortingService.doSortInsertion(selectColumn);
+		numBack backDatasSelection = SortingService.doSortSelection(selectColumn);
 		model.addAttribute("backDatasBubble", backDatasBubble);
 		model.addAttribute("backDatasInsertion", backDatasInsertion);
+		model.addAttribute("backDatasSelection", backDatasSelection);
 		return "sorting";
 	}
 	

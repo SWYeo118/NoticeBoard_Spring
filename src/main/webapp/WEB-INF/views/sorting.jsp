@@ -23,14 +23,21 @@
 				<option value="5">면적으로 정렬</option>
 				<option value="10">준공연도로 정렬</option> 
 				<option value="8">금액으로정렬</option>
-			</select>  
-			<span>
-			<input type="submit" value="선택">
+			</select>  <span> <input type="submit" value="선택">
 			</span>
 		</form>
-	</center>
-
-	<center>
+		<br>
+		<table>버블정렬 : ${backDatasBubble.time1} ms 소요 / 퀵정렬(듀얼피봇) :
+			${backDatasBubble.time2} ms 소요
+		</table>
+		<table>삽입정렬 : ${backDatasInsertion.time1} ms 소요 / 퀵정렬(듀얼피봇) :
+			${backDatasInsertion.time2} ms 소요
+		</table>
+		<table>선택정렬 : ${backDatasSelection.time1} ms 소요 / 퀵정렬(듀얼피봇) :
+			${backDatasSelection.time2} ms 소요
+		</table>
+		<br>
+		<span style="font-size: 24px;"> 정렬된 데이터 </span><br>
 		<table>
 			<c:forEach var="item" items="${backDatasBubble.arrIntCompare}">
 				<tr>
@@ -39,20 +46,5 @@
 			</c:forEach>
 		</table>
 	</center>
-	<table>
-	${backDatasBubble.time1}
-	${backDatasBubble.time2}
-	</table>
-	<table>
-	${backDatasInsertion.time1}
-	${backDatasInsertion.time2}
-	</table>
-
-
-
-
-
-
-
 </body>
 </html>
