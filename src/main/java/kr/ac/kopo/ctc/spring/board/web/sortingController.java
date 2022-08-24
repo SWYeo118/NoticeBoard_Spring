@@ -5,12 +5,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -26,6 +29,8 @@ public class sortingController {
 	public static void main(String[] args) {
 
 		try {
+			int i = 0;
+			int k = 0;
 			FileInputStream file = new FileInputStream(new File(filePath, fileName));
 
 			// 엑셀 파일로 Workbook instance를 생성한다.
@@ -34,96 +39,83 @@ public class sortingController {
 			// workbook의 첫번째 sheet를 가저온다.
 			XSSFSheet sheet = workbook.getSheetAt(0);
 
+			XSSFRow rows = sheet.getRow(0);
+			int rowCount = sheet.getPhysicalNumberOfRows();
+			int cellCount = rows.getPhysicalNumberOfCells();
+			int countOfAllCells = rowCount * cellCount;
+
 			// 만약 특정 이름의 시트를 찾는다면 workbook.getSheet("찾는 시트의 이름");
 			// 만약 모든 시트를 순회하고 싶으면
 			// for(Integer sheetNum : workbook.getNumberOfSheets()) {
 			// XSSFSheet sheet = workbook.getSheetAt(i);
 			// }
 			// 아니면 Iterator<Sheet> s = workbook.iterator() 를 사용해서 조회해도 좋다.
-			
+
 			// 정렬 알고리즘 선택
 			Sorter sorter = new BubbleSort();
 
 			// 각각 다른 방식으로 정렬할 두개의 배열 만들기
-			List<Integer> arrIntBase = new ArrayList<>();
-			List<Integer> arrIntCompare = new ArrayList<>();
-			List<String> arrStringBase = new ArrayList<>();
-			List<String> arrStringCompare = new ArrayList<>();
-			
+			int[] arrIntBase = new int[countOfAllCells];
+			int[] arrIntCompare = new int[countOfAllCells];
+			String[] arrStringBase = new String[countOfAllCells];
+			String[] arrStringCompare = new String[countOfAllCells];
+
 			// 모든 행(row)들을 조회한다.
 			Iterator<Row> rowIterator = sheet.iterator();
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
-
 				// 각각의 행에 존재하는 모든 열(cell)을 순회한다.
 				Iterator<Cell> cellIterator = row.cellIterator();
-
 				while (cellIterator.hasNext()) {
 					Cell cell = cellIterator.next();
-
-					// cell의 타입을 확인하고, 값을 가져온다.
-					
-					if (cell.getCellType() == CellType.NUMERIC) {
-						arrIntBase.add((int) cell.getNumericCellValue());
-						arrIntCompare.add((int) cell.getNumericCellValue());
-					} else if (cell.getCellType() == CellType.STRING) {
-						arrStringBase.add(cell.getStringCellValue());
-						arrStringCompare.add(cell.getStringCellValue());
-					}
-					
-//					switch (cell.getCellType()) {
-//					case NUMERIC:
+					switch (cell.getCellType()) {
+					case NUMERIC:
+						arrIntBase[i] = (int) cell.getNumericCellValue();
+						arrIntCompare[i] = (int) cell.getNumericCellValue();
 //						System.out.print((int) cell.getNumericCellValue() + "\t"); // getNumericCellValue 메서드는 기본으로 double형 반환
-//						break;
-//					case STRING:
+						i++;
+						break;
+					case STRING:
+						arrStringBase[k] = cell.getStringCellValue();
+						arrStringCompare[k] = cell.getStringCellValue();
 //						System.out.print(cell.getStringCellValue() + "\t");
-//						break;
+						k++;
+						break;
+					}
+					// cell의 타입을 확인하고, 값을 가져온다.
+//					if (cell.getCellType() == CellType.NUMERIC) {
+//						for (int i = 0; i < rowCount; i++) {
+////							arrIntBase[i] = (int) cell.getNumericCellValue();
+////							arrIntCompare[i] = (int) cell.getNumericCellValue();
+//							System.out.print((int) cell.getNumericCellValue() + "\t");
+//						}
+//					} else if (cell.getCellType() == CellType.STRING) {
+//						for (int i = 0; i < rowCount; i++) {
+////							arrStringBase[i] = cell.getStringCellValue();
+////							arrStringCompare[i] = cell.getStringCellValue();
+//							System.out.print(cell.getStringCellValue() + "\t");
+//						}
 //					}
 				}
 				System.out.println();
 			}
+			long savedTime = System.currentTimeMillis();
+			sorter.sort(arrIntBase);
+			System.out.println(String.format("Custom sorting에 소요된 시간 : %dms", System.currentTimeMillis() - savedTime));
+			savedTime = System.currentTimeMillis();
+			// Dual-Pivot Quick Sort
+			Arrays.sort(arrIntCompare);
+			System.out.println(String.format("library sorting에 소요된 시간 : %dms", System.currentTimeMillis() - savedTime));
+			System.out.println("Perfect sorting!");
 			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		// 정렬 시작
-		// 총 배열의 길이 미리 정하기
-//		final int SIZE = 30000;
-
-
-//		int[] arr = new int[SIZE];
-//		int[] arr2 = new int[SIZE];
-		for (int i = 0; i < SIZE; i++) {
-			int number = (int) ((Math.random() * SIZE) + 1);
-			arr[i] = number;
-			arr2[i] = number;
-		}
-
-		long savedTime = System.currentTimeMillis();
-		sorter.sort(arr);
-		System.out.println(String.format("Custom sorting에 소요된 시간 : %dms", System.currentTimeMillis() - savedTime));
-
-		savedTime = System.currentTimeMillis();
-
-		// Dual-Pivot Quick Sort
-		Arrays.sort(arr2);
-		System.out.println(String.format("library sorting에 소요된 시간 : %dms", System.currentTimeMillis() - savedTime));
-
-		for (int i = 0; i < SIZE; i++) {
-			if (arr[i] != arr2[i]) {
-				System.out.println("Sorting was incorrect");
-				return;
-			}
-		}
-		System.out.println("Perfect sorting!");
-		
 		// 정렬 끝
 	}
 
 	public interface Sorter {
-		public void sort(int[] arr);
+		public void sort(int[] arrIntBase);
 	}
 
 }
