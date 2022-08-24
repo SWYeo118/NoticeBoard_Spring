@@ -28,7 +28,7 @@ import kr.ac.kopo.ctc.spring.board.service.SelectionSort;
 public class sortingService {
 
 	public static String filePath = "/Users/sangwoo/Desktop";
-	public static String fileName = "realestatewithamenity.xlsx";
+	public static String fileName = "population.xlsx";
 
 	public static numBack doSortBubble(int stringNum) throws IOException {
 		FileInputStream file = new FileInputStream(new File(filePath, fileName));
@@ -71,6 +71,7 @@ public class sortingService {
 			NumBack.setArrIntCompare(arrIntCompare);
 			NumBack.setTime1(time1);
 			NumBack.setTime2(time2);
+//			NumBack.setBubbleSort(sorter);
 			file.close();
 		} catch (IOException e) {
 			e.printStackTrace();

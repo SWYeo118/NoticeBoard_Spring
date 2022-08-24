@@ -1,9 +1,14 @@
 package kr.ac.kopo.ctc.spring.board.dto;
 
+import kr.ac.kopo.ctc.spring.board.web.sortingService.Sorter;
+
 public class numBack {
 	public long time1;
 	public long time2;
 	public int[] arrIntCompare;
+	public Sorter BubbleSort;
+	public Sorter InsertionSort;
+	
 	public long getTime1() {
 		return time1;
 	}
@@ -21,5 +26,11 @@ public class numBack {
 	}
 	public void setArrIntCompare(int[] arrIntCompare) {
 		this.arrIntCompare = arrIntCompare;
+	}
+	public Sorter getBubbleSort() {
+		return BubbleSort;
+	}
+	public void setBubbleSort(Sorter bubbleSort) {
+		BubbleSort = bubbleSort;
 	}
 }

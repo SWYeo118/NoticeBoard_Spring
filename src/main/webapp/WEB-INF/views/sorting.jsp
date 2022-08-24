@@ -19,10 +19,10 @@
 		<form action="/sorting/selectColumn">
 			<select name="selectColumn"> 
 				<option>정렬할 컬럼을 선택해주세요</option> 
-				<option value="14">지하철과의 거리로 정렬</option> 
-				<option value="5">면적으로 정렬</option>
-				<option value="10">준공연도로 정렬</option> 
-				<option value="8">금액으로정렬</option>
+				<option value="1">총 인구수로 정렬</option> 
+				<option value="2">남자 인구수로 정렬</option>
+				<option value="3">여자 인구수로 정렬</option> 
+				<!-- <option value="8">금액으로정렬</option> -->
 			</select>  <span> <input type="submit" value="선택">
 			</span>
 		</form>
@@ -45,6 +45,16 @@
 				</tr>
 			</c:forEach>
 		</table>
+		
+<%-- 		<table>
+			<c:forEach var="process" items="${backDatasBubble.sorter}">
+				<tr>
+					<th width=150px height=40px>${process}</th>
+				</tr>
+			</c:forEach>
+		</table> --%>
+		
+		
 	</center>
 </body>
 </html>
