@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.kopo.ctc.spring.board.domain.Notice;
+import kr.ac.kopo.ctc.spring.board.dto.numBack;
 import kr.ac.kopo.ctc.spring.board.service.NoticeService;
 
 // 각각 Domain은 @Entity, Controller는 @Controller, Repository는 @Repository annotation을 적어준다.
@@ -39,8 +40,10 @@ public class RealSortingController {
 		req.setCharacterEncoding("utf-8");
 		
 		int selectColumn = Integer.parseInt(req.getParameter("selectColumn"));
-		int[] backDatas = SortingService.doSort(selectColumn);
-		model.addAttribute("backDatas", backDatas);
+		numBack backDatasBubble = SortingService.doSortBubble(selectColumn);
+		numBack backDatasInsertion = SortingService.doSortInsertion(selectColumn);
+		model.addAttribute("backDatasBubble", backDatasBubble);
+		model.addAttribute("backDatasInsertion", backDatasInsertion);
 		return "sorting";
 	}
 	

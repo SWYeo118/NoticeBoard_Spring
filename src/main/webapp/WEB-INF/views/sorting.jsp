@@ -24,7 +24,7 @@
 				<option value="10">준공연도로 정렬</option> 
 				<option value="8">금액으로정렬</option>
 			</select>  
-			<span> 
+			<span>
 			<input type="submit" value="선택">
 			</span>
 		</form>
@@ -32,13 +32,21 @@
 
 	<center>
 		<table>
-			<c:forEach var="item" items="${backDatas}">
+			<c:forEach var="item" items="${backDatasBubble.arrIntCompare}">
 				<tr>
 					<th width=150px height=40px>${item}</th>
 				</tr>
 			</c:forEach>
 		</table>
 	</center>
+	<table>
+	${backDatasBubble.time1}
+	${backDatasBubble.time2}
+	</table>
+	<table>
+	${backDatasInsertion.time1}
+	${backDatasInsertion.time2}
+	</table>
 
 
 
