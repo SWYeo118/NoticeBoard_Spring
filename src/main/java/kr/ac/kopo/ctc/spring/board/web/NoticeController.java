@@ -360,7 +360,7 @@ public class NoticeController {
 //			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
 //		req.setCharacterEncoding("utf-8");
 //		Class.forName("com.mysql.cj.jdbc.Driver");
-//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
+//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "");
 //		Statement stmt = conn.createStatement();
 //		String id = req.getParameter("id");
 //		String titleTmp = req.getParameter("title");
@@ -381,7 +381,7 @@ public class NoticeController {
 //		String key = req.getParameter("key");
 //		int keyNum = Integer.parseInt(key);
 //		Class.forName("com.mysql.cj.jdbc.Driver");
-//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
+//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "");
 //		Statement stmt = conn.createStatement();
 //		stmt.execute("UPDATE gongji SET viewingCount = viewingCount + 1 where id=" + keyNum + ";");
 //		String title = noticedao.getOne(keyNum).getTitle();
@@ -417,7 +417,7 @@ public class NoticeController {
 //	public String e_02_delete(Model model, HttpServletRequest req)
 //			throws ClassNotFoundException, SQLException, UnsupportedEncodingException {
 //		Class.forName("com.mysql.cj.jdbc.Driver");
-//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
+//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "");
 //		Statement stmt = conn.createStatement();
 //		NoticeRepository noticedao = new NoticeService();
 //		String id = req.getParameter("key");
@@ -485,7 +485,7 @@ public class NoticeController {
 //		String barSum = "";
 //		String replyTitle = "";
 //		Class.forName("com.mysql.cj.jdbc.Driver");
-//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "CJDghd9311@");
+//		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kopoctc", "root", "");
 //		Statement stmt = conn.createStatement();
 //		String replyContent = req.getParameter("replyContent");
 //		String originalPostId = req.getParameter("originalPostId");
